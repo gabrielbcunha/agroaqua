@@ -41,6 +41,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/crop").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/plot").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/handling").hasAnyAuthority("ADMIN", "EMPLOYEE_MANAGER", "EMPLOYEE_WORKER")
                         .requestMatchers("/error").permitAll()
                         .anyRequest().authenticated()
                 )
