@@ -22,4 +22,6 @@ public class SensorJpaEntity {
 
     private boolean active;
 
+    private String apiKeyHash;
+
 }

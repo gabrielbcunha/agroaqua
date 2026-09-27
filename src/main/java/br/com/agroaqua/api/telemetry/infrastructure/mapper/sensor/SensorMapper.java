@@ -17,7 +17,8 @@ public interface SensorMapper {
                 sensorJpaEntity.getId(),
                 sensorJpaEntity.getCode(),
                 sensorJpaEntity.getPlotId(),
-                sensorJpaEntity.isActive()
+                sensorJpaEntity.isActive(),
+                sensorJpaEntity.getApiKeyHash()
         );
     }
 }

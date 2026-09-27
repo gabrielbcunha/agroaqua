@@ -1,0 +1,2 @@
+ALTER TABLE tb_sensors
+ADD COLUMN api_key_hash VARCHAR(255) NOT NULL;

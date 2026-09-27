@@ -5,16 +5,18 @@ public class Sensor {
     private String code;
     private Long plotId;
     private boolean active;
+    private String apiKeyHash;
 
-    public Sensor(String code, Long plotId, boolean active) {
-        validadeInput(code, plotId);
+    public Sensor(String code, Long plotId, boolean active, String apiKeyHash) {
+        validadeInput(code, plotId, apiKeyHash);
         this.code = code;
         this.plotId = plotId;
         this.active = active;
+        this.apiKeyHash = apiKeyHash;
     }
 
-    public Sensor(Long id, String code, Long plotId, boolean active) {
-        this(code, plotId, active);
+    public Sensor(Long id, String code, Long plotId, boolean active, String apiKeyHash) {
+        this(code, plotId, active, apiKeyHash);
         if(id == null){
             throw new IllegalArgumentException("id cannot be null");
         }
@@ -37,11 +39,17 @@ public class Sensor {
         return active;
     }
 
-    public void validadeInput(String code, Long plotId){
+    public String getApiKeyHash() {
+        return apiKeyHash;
+    }
+
+    public void validadeInput(String code, Long plotId, String apiKeyHash) {
         if(code == null){
             throw new IllegalArgumentException("code cannot be null");
         } else if(plotId == null){
             throw new IllegalArgumentException("plotId cannot be null");
+        } if(apiKeyHash == null){
+            throw new IllegalArgumentException("apiKeyHash cannot be null");
         }
     }
 

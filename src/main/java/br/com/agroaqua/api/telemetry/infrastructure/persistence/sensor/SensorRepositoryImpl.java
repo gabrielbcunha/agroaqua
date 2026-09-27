@@ -29,7 +29,8 @@ public class SensorRepositoryImpl implements SensorRepository {
     //Mudar
     @Override
     public Optional<Sensor> findById(Long id) {
-        return Optional.empty();
+        return sensorSpringDataRepository.findById(id)
+                .map(sensorMapper::toDomain);
     }
 
     //Mudar

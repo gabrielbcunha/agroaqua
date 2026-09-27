@@ -4,5 +4,6 @@ public record SensorCreateResponse(
         Long id,
         String code,
         Long plotId,
-        boolean active
+        boolean active,
+        String rawApiKey
 ) {}

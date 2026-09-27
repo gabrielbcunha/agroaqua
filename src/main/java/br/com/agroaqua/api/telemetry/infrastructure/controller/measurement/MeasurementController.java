@@ -5,10 +5,7 @@ import br.com.agroaqua.api.telemetry.application.dto.measurement.create.Measurem
 import br.com.agroaqua.api.telemetry.application.usecase.measurement.RegisterNewMeasurementUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/measurement")
@@ -21,8 +18,10 @@ public class MeasurementController {
     }
 
     @PostMapping()
-    public ResponseEntity<MeasurementCreateResponse> registerMeasurement(@RequestBody MeasurementCreateRequest request){
-        MeasurementCreateResponse response = registerNewMeasurementUseCase.execute(request);
+    public ResponseEntity<MeasurementCreateResponse> registerMeasurement(
+            @RequestHeader("X-Sensor-Key") String apiKey,
+            @RequestBody MeasurementCreateRequest request){
+        MeasurementCreateResponse response = registerNewMeasurementUseCase.execute(request, apiKey);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }
