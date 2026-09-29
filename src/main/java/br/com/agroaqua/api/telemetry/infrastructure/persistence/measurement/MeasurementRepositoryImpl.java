@@ -26,15 +26,15 @@ public class MeasurementRepositoryImpl implements MeasurementRepository {
         return measurementMapper.toDomain(savedMeasurement);
     }
 
-    //Mudar
     @Override
     public Optional<Measurement> findById(Long id) {
-        return Optional.empty();
+        return measurementSpringDataRepository.findById(id)
+                .map(measurementMapper::toDomain);
     }
 
-    //Mudar
     @Override
     public List<Measurement> findAll() {
-        return List.of();
+        return measurementSpringDataRepository.findAll()
+                .stream().map(measurementMapper::toDomain).toList();
     }
 }
