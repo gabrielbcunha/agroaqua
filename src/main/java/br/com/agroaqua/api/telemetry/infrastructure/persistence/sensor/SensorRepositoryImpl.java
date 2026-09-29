@@ -26,16 +26,15 @@ public class SensorRepositoryImpl implements SensorRepository {
         return sensorMapper.toDomain(savedEntity);
     }
 
-    //Mudar
     @Override
     public Optional<Sensor> findById(Long id) {
         return sensorSpringDataRepository.findById(id)
                 .map(sensorMapper::toDomain);
     }
 
-    //Mudar
     @Override
     public List<Sensor> findAll() {
-        return List.of();
+        return sensorSpringDataRepository.findAll()
+                .stream().map(sensorMapper::toDomain).toList();
     }
 }
