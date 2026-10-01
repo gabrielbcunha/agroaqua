@@ -11,4 +11,5 @@ public interface SensorRepository {
 
     List<Sensor> findAll();
 
+    Optional<Sensor> findByCode(String sensorCode);
 }

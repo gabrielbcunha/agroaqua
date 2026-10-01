@@ -41,4 +41,9 @@ public class SensorController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @GetMapping("/code/{sensorCode}")
+    public ResponseEntity<SensorGetResponse> findByCode(@PathVariable String sensorCode){
+        SensorGetResponse response = findSensorUseCase.findByCode(sensorCode);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }

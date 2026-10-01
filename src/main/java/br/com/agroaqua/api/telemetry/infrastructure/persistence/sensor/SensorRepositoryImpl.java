@@ -37,4 +37,10 @@ public class SensorRepositoryImpl implements SensorRepository {
         return sensorSpringDataRepository.findAll()
                 .stream().map(sensorMapper::toDomain).toList();
     }
+
+    @Override
+    public Optional<Sensor> findByCode(String sensorCode) {
+        return sensorSpringDataRepository.findByCode(sensorCode)
+                .map(sensorMapper::toDomain);
+    }
 }

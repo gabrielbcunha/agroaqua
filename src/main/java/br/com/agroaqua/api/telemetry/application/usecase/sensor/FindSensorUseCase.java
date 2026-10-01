@@ -7,6 +7,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FindSensorUseCase {
@@ -28,5 +29,11 @@ public class FindSensorUseCase {
                 .stream()
                 .map(SensorGetResponse::fromDomain)
                 .toList();
+    }
+
+    public SensorGetResponse findByCode(String sensorCode){
+        Sensor sensor = sensorRepository.findByCode(sensorCode)
+                .orElseThrow(() -> new EntityNotFoundException("Sensor not found with code: " + sensorCode));
+        return SensorGetResponse.fromDomain(sensor);
     }
 }
