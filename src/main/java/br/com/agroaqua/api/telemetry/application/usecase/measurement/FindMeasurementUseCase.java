@@ -30,4 +30,18 @@ public class FindMeasurementUseCase {
                 .toList();
     }
 
+    public List<MeasurementGetResponse> findAllBySensorId(Long sensorId){
+        return measurementRepository.findAllBySensorId(sensorId)
+                .stream()
+                .map(MeasurementGetResponse::fromDomain)
+                .toList();
+    }
+
+    public List<MeasurementGetResponse> findBySensorCode(String sensorCode){
+        return measurementRepository.findBySensorCode(sensorCode)
+                .stream()
+                .map(MeasurementGetResponse::fromDomain)
+                .toList();
+    }
+
 }

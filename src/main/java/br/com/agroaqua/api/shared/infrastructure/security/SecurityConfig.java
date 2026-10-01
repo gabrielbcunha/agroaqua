@@ -48,6 +48,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/sensor/code/{sensorCode}").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/measurement").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/measurement/{id}").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/measurement/sensor/{sensorId}").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/measurement/sensor/code/{sensorCode}").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/measurement").permitAll()
                         .requestMatchers("/error").permitAll()
                         .anyRequest().authenticated()

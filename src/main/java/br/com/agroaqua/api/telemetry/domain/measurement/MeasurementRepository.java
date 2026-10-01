@@ -11,4 +11,7 @@ public interface MeasurementRepository {
 
     List<Measurement> findAll();
 
+    List<Measurement> findAllBySensorId(Long sensorId);
+
+    List<Measurement> findBySensorCode(String code);
 }

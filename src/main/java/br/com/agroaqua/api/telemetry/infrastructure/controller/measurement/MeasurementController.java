@@ -43,4 +43,16 @@ public class MeasurementController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @GetMapping("/sensor/{sensorId}")
+    public ResponseEntity<List<MeasurementGetResponse>> findBySensorId(@PathVariable Long sensorId) {
+        List<MeasurementGetResponse> response = findMeasurementUseCase.findAllBySensorId(sensorId);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("/sensor/code/{sensorCode}")
+    public ResponseEntity<List<MeasurementGetResponse>> findBySensorCode(@PathVariable String sensorCode) {
+        List<MeasurementGetResponse> response = findMeasurementUseCase.findBySensorCode(sensorCode);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
 }
