@@ -27,15 +27,29 @@ public class PlotRepositoryImpl implements PlotRepository {
         return plotMapper.toDomain(savedEntity);
     }
 
-    //mudar
-    @Override
-    public Optional<Plot> findById(Long id) {
-        return Optional.empty();
-    }
-
-    //mudar
     @Override
     public List<Plot> findAll() {
-        return List.of();
+        return plotSpringDataRepository.findAll()
+                .stream().map(plotMapper::toDomain).toList();
+    }
+
+    @Override
+    public Optional<Plot> findById(Long id) {
+        return plotSpringDataRepository.findById(id)
+                .map(plotMapper::toDomain);
+    }
+
+    @Override
+    public Optional<Plot> findByCode(String code) {
+        return plotSpringDataRepository.findByCode(code)
+                .map(plotMapper::toDomain);
+    }
+
+    @Override
+    public List<Plot> findByCropId(Long cropId) {
+        return plotSpringDataRepository.findByCropId(cropId)
+                .stream()
+                .map(plotMapper::toDomain)
+                .toList();
     }
 }

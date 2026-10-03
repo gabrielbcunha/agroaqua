@@ -11,4 +11,7 @@ public interface PlotRepository {
 
     List<Plot> findAll();
 
+    Optional<Plot> findByCode(String code);
+
+    List<Plot> findByCropId(Long cropId);
 }
