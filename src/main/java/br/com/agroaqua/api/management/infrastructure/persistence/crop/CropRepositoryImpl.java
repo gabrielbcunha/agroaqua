@@ -19,7 +19,6 @@ public class CropRepositoryImpl implements CropRepository {
         this.cropMapper = cropMapper;
     }
 
-
     @Override
     public Crop save(Crop crop) {
         CropJpaEntity cropJpaEntity = cropMapper.toJpaEntity(crop);
@@ -27,15 +26,18 @@ public class CropRepositoryImpl implements CropRepository {
         return cropMapper.toDomain(savedEntity);
     }
 
-    //Mudar
-    @Override
-    public Optional<Crop> findById(Long id) {
-        return Optional.empty();
-    }
-
-    //Mudar
     @Override
     public List<Crop> findAll() {
-        return List.of();
+        return cropSpringDataRepository.findAll()
+                .stream()
+                .map(cropMapper::toDomain)
+                .toList();
     }
+
+    @Override
+    public Optional<Crop> findById(Long id) {
+        return cropSpringDataRepository.findById(id)
+                .map(cropMapper::toDomain);
+    }
+
 }
