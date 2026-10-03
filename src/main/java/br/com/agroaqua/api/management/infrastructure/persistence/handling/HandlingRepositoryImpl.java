@@ -26,15 +26,33 @@ public class HandlingRepositoryImpl implements HandlingRepository {
         return handlingMapper.toDomain(saveEntity);
     }
 
-    //mudar
-    @Override
-    public Optional<Handling> findById(Long id) {
-        return Optional.empty();
-    }
-
-    //mudar
     @Override
     public List<Handling> findAll() {
-        return List.of();
+        return handlingSpringDataRepository.findAll()
+                .stream()
+                .map(handlingMapper::toDomain)
+                .toList();
+    }
+
+    @Override
+    public Optional<Handling> findById(Long id) {
+        return handlingSpringDataRepository.findById(id)
+                .map(handlingMapper::toDomain);
+    }
+
+    @Override
+    public List<Handling> findByEmployeeId(Long employeeId) {
+        return handlingSpringDataRepository.findByEmployeeId(employeeId)
+                .stream()
+                .map(handlingMapper::toDomain)
+                .toList();
+    }
+
+    @Override
+    public List<Handling> findByPlotId(Long plotId) {
+        return handlingSpringDataRepository.findByPlotId(plotId)
+                .stream()
+                .map(handlingMapper::toDomain)
+                .toList();
     }
 }

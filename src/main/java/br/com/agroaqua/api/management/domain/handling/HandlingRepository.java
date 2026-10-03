@@ -11,4 +11,8 @@ public interface HandlingRepository {
 
     List<Handling> findAll();
 
+    List<Handling> findByEmployeeId(Long employeeId);
+
+    List<Handling> findByPlotId(Long plotId);
+
 }
