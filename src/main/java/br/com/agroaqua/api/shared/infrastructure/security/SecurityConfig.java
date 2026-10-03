@@ -36,23 +36,41 @@ public class SecurityConfig {
                         session.sessionCreationPolicy
                                 (org.springframework.security.config.http.SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        //.requestMatchers(HttpMethod. , "/ / ").hasRole("") || .hasAnyRole("","")
-                        .requestMatchers(HttpMethod.POST, "/api/admin/onboarding/employees").hasAuthority("ADMIN")
+                        //=========================== Auth ==================================
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                        //=========================== Admin =================================
+                        .requestMatchers(HttpMethod.POST, "/api/admin/onboarding/employees").hasAuthority("ADMIN")
+                        //========================== Employee ===============================
                         .requestMatchers(HttpMethod.GET, "/api/employee").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/employee/{id}").hasAuthority("ADMIN")
+                        //============================ Crop =================================
                         .requestMatchers(HttpMethod.POST, "/api/crop").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/crop").hasAnyAuthority("ADMIN", "EMPLOYEE_MANAGER", "EMPLOYEE_WORKER")
+                        .requestMatchers(HttpMethod.GET, "/api/crop/{id}").hasAnyAuthority("ADMIN", "EMPLOYEE_MANAGER", "EMPLOYEE_WORKER")
+                        //============================ Plot =================================
                         .requestMatchers(HttpMethod.POST, "/api/plot").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/plot").hasAnyAuthority("ADMIN", "EMPLOYEE_MANAGER", "EMPLOYEE_WORKER")
+                        .requestMatchers(HttpMethod.GET, "/api/plot/{id}").hasAnyAuthority("ADMIN", "EMPLOYEE_MANAGER", "EMPLOYEE_WORKER")
+                        .requestMatchers(HttpMethod.GET, "/api/plot/code/{code}").hasAnyAuthority("ADMIN", "EMPLOYEE_MANAGER", "EMPLOYEE_WORKER")
+                        .requestMatchers(HttpMethod.GET, "/api/plot/crop/{cropId}").hasAnyAuthority("ADMIN", "EMPLOYEE_MANAGER", "EMPLOYEE_WORKER")
+                        //========================== Handling ===============================
                         .requestMatchers(HttpMethod.POST, "/api/handling").hasAnyAuthority("ADMIN", "EMPLOYEE_MANAGER", "EMPLOYEE_WORKER")
+                        .requestMatchers(HttpMethod.GET, "/api/handling").hasAnyAuthority("ADMIN", "EMPLOYEE_MANAGER", "EMPLOYEE_WORKER")
+                        .requestMatchers(HttpMethod.GET, "/api/handling/{id}").hasAnyAuthority("ADMIN", "EMPLOYEE_MANAGER", "EMPLOYEE_WORKER")
+                        .requestMatchers(HttpMethod.GET, "/api/handling/employee/{employeeId}").hasAnyAuthority("ADMIN", "EMPLOYEE_MANAGER", "EMPLOYEE_WORKER")
+                        .requestMatchers(HttpMethod.GET, "/api/handling/plot/{plotId}").hasAnyAuthority("ADMIN", "EMPLOYEE_MANAGER", "EMPLOYEE_WORKER")
+                        //=========================== Sensor ================================
                         .requestMatchers(HttpMethod.POST, "/api/sensor").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/sensor").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/sensor/{id}").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/sensor/code/{sensorCode}").hasAuthority("ADMIN")
+                        //========================== Measurement ============================
                         .requestMatchers(HttpMethod.GET, "/api/measurement").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/measurement/{id}").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/measurement/sensor/{sensorId}").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/measurement/sensor/code/{sensorCode}").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/measurement").permitAll()
+                        //============================ Others ===============================
                         .requestMatchers("/error").permitAll()
                         .anyRequest().authenticated()
                 )
