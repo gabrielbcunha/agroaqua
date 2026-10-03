@@ -4,7 +4,7 @@ import br.com.agroaqua.api.admin.application.dto.AdminOnboardingRequest;
 import br.com.agroaqua.api.admin.application.dto.AdminOnboardingResponse;
 import br.com.agroaqua.api.identity.application.dto.create.UserCreateRequest;
 import br.com.agroaqua.api.identity.application.usecase.RegisterNewUserUseCase;
-import br.com.agroaqua.api.operational.application.dto.EmployeeCreateRequest;
+import br.com.agroaqua.api.operational.application.dto.create.EmployeeCreateRequest;
 import br.com.agroaqua.api.operational.application.usecase.RegisterNewEmployeeUseCase;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
