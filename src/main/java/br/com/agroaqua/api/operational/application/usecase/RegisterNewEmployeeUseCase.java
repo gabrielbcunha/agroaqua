@@ -1,6 +1,6 @@
 package br.com.agroaqua.api.operational.application.usecase;
 
-import br.com.agroaqua.api.operational.application.dto.EmployeeCreateRequest;
+import br.com.agroaqua.api.operational.application.dto.create.EmployeeCreateRequest;
 import br.com.agroaqua.api.operational.domain.employee.Employee;
 import br.com.agroaqua.api.operational.domain.employee.EmployeeRepository;
 import org.springframework.stereotype.Service;

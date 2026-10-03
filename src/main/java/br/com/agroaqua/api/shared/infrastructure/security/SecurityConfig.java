@@ -39,6 +39,8 @@ public class SecurityConfig {
                         //.requestMatchers(HttpMethod. , "/ / ").hasRole("") || .hasAnyRole("","")
                         .requestMatchers(HttpMethod.POST, "/api/admin/onboarding/employees").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/employee").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/employee/{id}").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/crop").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/plot").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/handling").hasAnyAuthority("ADMIN", "EMPLOYEE_MANAGER", "EMPLOYEE_WORKER")

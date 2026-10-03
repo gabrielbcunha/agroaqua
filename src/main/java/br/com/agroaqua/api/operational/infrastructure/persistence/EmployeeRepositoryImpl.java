@@ -25,15 +25,15 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
         employeeSpringDataRepository.save(jpaEntity);
     }
 
-    //Mudar
     @Override
     public Optional<Employee> findById(Long id) {
-        return Optional.empty();
+        return employeeSpringDataRepository.findById(id)
+                .map(employeeMapper::toDomain);
     }
 
-    //Mudar
     @Override
-    public List<Employee> findAllActiveEmployees() {
-        return List.of();
+    public List<Employee> findAll() {
+        return employeeSpringDataRepository.findAll()
+                .stream().map(employeeMapper::toDomain).toList();
     }
 }

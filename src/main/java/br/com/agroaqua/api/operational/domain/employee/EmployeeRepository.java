@@ -9,5 +9,5 @@ public interface EmployeeRepository {
 
     Optional<Employee> findById(Long id);
 
-    List<Employee> findAllActiveEmployees();
+    List<Employee> findAll();
 }
