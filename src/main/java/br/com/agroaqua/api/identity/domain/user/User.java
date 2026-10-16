@@ -48,4 +48,26 @@ public class User {
     public Role getRole() {
         return role;
     }
+
+    public void changeEmail(String newEmail) {
+        if (newEmail == null || newEmail.trim().isEmpty()) {
+            throw new IllegalArgumentException("New Email cannot be null or blank");
+        }
+        this.email = newEmail;
+    }
+
+    public void changePassword(String newPassword) {
+        if (newPassword == null || newPassword.trim().isEmpty()) {
+            throw new IllegalArgumentException("New Password cannot be null or blank");
+        }
+        this.password = newPassword;
+    }
+
+    public void changeRole(Role newRole) {
+        if (newRole == null) {
+            throw new IllegalArgumentException("New Role cannot be null");
+        }
+        this.role = newRole;
+    }
+
 }

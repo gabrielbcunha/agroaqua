@@ -26,6 +26,11 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public Optional<User> findById(Long id) {
+        return userSpringDataRepository.findById(id).map(userMapper::toDomain);
+    }
+
+    @Override
     public Optional<User> findByEmail(String email) {
         return userSpringDataRepository.findByEmail(email).map(userMapper::toDomain);
     }
