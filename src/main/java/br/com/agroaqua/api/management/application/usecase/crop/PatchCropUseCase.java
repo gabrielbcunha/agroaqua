@@ -43,7 +43,7 @@ public class PatchCropUseCase {
             crop.changeNormalHumidity(request.normalHumidity());
         }
 
-        if(request.standardTimeToGrowInDays() <= 0) {
+        if(request.standardTimeToGrowInDays() != null && request.standardTimeToGrowInDays() >= 0) {
             crop.changeStandardTimeToGrowInDays(request.standardTimeToGrowInDays());
         }
 

@@ -6,5 +6,5 @@ public record CropPatchRequest(
         String name,
         String description,
         BigDecimal normalHumidity,
-        int standardTimeToGrowInDays
+        Integer standardTimeToGrowInDays
 ) { }
