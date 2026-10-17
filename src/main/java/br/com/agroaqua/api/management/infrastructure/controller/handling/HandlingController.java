@@ -3,7 +3,9 @@ package br.com.agroaqua.api.management.infrastructure.controller.handling;
 import br.com.agroaqua.api.management.application.dto.handling.create.HandlingCreateRequest;
 import br.com.agroaqua.api.management.application.dto.handling.create.HandlingCreateResponse;
 import br.com.agroaqua.api.management.application.dto.handling.get.HandlingGetResponse;
+import br.com.agroaqua.api.management.application.dto.handling.patch.HandlingPatchRequest;
 import br.com.agroaqua.api.management.application.usecase.handling.FindHandlingUseCase;
+import br.com.agroaqua.api.management.application.usecase.handling.PatchHandlingUseCase;
 import br.com.agroaqua.api.management.application.usecase.handling.RegisterNewHandlingUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +19,12 @@ public class HandlingController {
 
     private final RegisterNewHandlingUseCase registerNewHandlingUseCase;
     private final FindHandlingUseCase findHandlingUseCase;
+    private final PatchHandlingUseCase patchHandlingUseCase;
 
-    public HandlingController(RegisterNewHandlingUseCase registerNewHandlingUseCase, FindHandlingUseCase findHandlingUseCase) {
+    public HandlingController(RegisterNewHandlingUseCase registerNewHandlingUseCase, FindHandlingUseCase findHandlingUseCase, PatchHandlingUseCase patchHandlingUseCase) {
         this.registerNewHandlingUseCase = registerNewHandlingUseCase;
         this.findHandlingUseCase = findHandlingUseCase;
+        this.patchHandlingUseCase = patchHandlingUseCase;
     }
 
     @PostMapping()
@@ -50,6 +54,12 @@ public class HandlingController {
     @GetMapping("/plot/{plotId}")
     public ResponseEntity<List<HandlingGetResponse>> findHandlingByPlotId(@PathVariable Long plotId) {
         List<HandlingGetResponse> response = findHandlingUseCase.findByPlotId(plotId);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<HandlingGetResponse> updateHandling(@PathVariable Long id, @RequestBody HandlingPatchRequest request) {
+        HandlingGetResponse response = patchHandlingUseCase.execute(id, request);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

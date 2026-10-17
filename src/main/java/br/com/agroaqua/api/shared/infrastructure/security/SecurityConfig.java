@@ -61,6 +61,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/handling/{id}").hasAnyAuthority("ADMIN", "EMPLOYEE_MANAGER", "EMPLOYEE_WORKER")
                         .requestMatchers(HttpMethod.GET, "/api/handling/employee/{employeeId}").hasAnyAuthority("ADMIN", "EMPLOYEE_MANAGER", "EMPLOYEE_WORKER")
                         .requestMatchers(HttpMethod.GET, "/api/handling/plot/{plotId}").hasAnyAuthority("ADMIN", "EMPLOYEE_MANAGER", "EMPLOYEE_WORKER")
+                        .requestMatchers(HttpMethod.PATCH, "/api/handling/{id}").hasAnyAuthority("ADMIN", "EMPLOYEE_MANAGER", "EMPLOYEE_WORKER")
                         //=========================== Sensor ================================
                         .requestMatchers(HttpMethod.POST, "/api/sensor").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/sensor").hasAuthority("ADMIN")

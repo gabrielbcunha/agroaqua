@@ -57,6 +57,52 @@ public class Handling {
         return endDateTime;
     }
 
+    public void changeEmployeeId(Long employeeId) {
+        if(employeeId == null) {
+            throw new IllegalArgumentException("employeeId cannot be null");
+        }
+        this.employeeId = employeeId;
+    }
+
+    public void changePlotId(Long newPlotId) {
+        if (newPlotId == null) {
+            throw new IllegalArgumentException("New Plot ID cannot be null");
+        }
+        this.plotId = newPlotId;
+    }
+
+    public void changeCategory(HandlingCategory newCategory) {
+        if (newCategory == null) {
+            throw new IllegalArgumentException("New Category cannot be null");
+        }
+        this.category = newCategory;
+    }
+
+    public void changeDescription(String newDescription) {
+        if (newDescription == null) {
+            throw new IllegalArgumentException("New Description cannot be null");
+        }
+        this.description = newDescription;
+    }
+
+    public void changeStartDateTime(LocalDateTime newStartDateTime) {
+        if (newStartDateTime == null) {
+            throw new IllegalArgumentException("New Start DateTime cannot be null");
+        } else if (newStartDateTime.isAfter(endDateTime)) {
+            throw new IllegalArgumentException("New Start DateTime cannot be after end DateTime");
+        }
+        this.startDateTime = newStartDateTime;
+    }
+
+    public void changeEndDateTime(LocalDateTime newEndDateTime) {
+        if (newEndDateTime == null) {
+            throw new IllegalArgumentException("New End DateTime cannot be null");
+        } else if (newEndDateTime.isBefore(startDateTime)) {
+            throw new IllegalArgumentException("New End DateTime cannot be before start DateTime");
+        }
+        this.endDateTime = newEndDateTime;
+    }
+
     public void validateInput(Long employeeId, Long plotId, HandlingCategory category, String description, LocalDateTime startDateTime, LocalDateTime endDateTime){
         if(employeeId == null) {
             throw new IllegalArgumentException("Employee ID cannot be null");
