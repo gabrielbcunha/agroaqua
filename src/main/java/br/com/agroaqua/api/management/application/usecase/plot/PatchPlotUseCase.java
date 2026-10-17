@@ -34,17 +34,7 @@ public class PatchPlotUseCase {
             plot.changeCropId(request.cropId());
         }
 
-        if (request.width() != null) {
-            plot.changeWidth(request.width());
-        }
-
-        if (request.length() != null) {
-            plot.changeLength(request.length());
-        }
-
-        if (request.usedArea() != null) {
-            plot.changeUsedArea(request.usedArea());
-        }
+        plot.changeWidthLengthUsedArea(request.width(), request.length(), request.usedArea());
 
         Plot patchedPlot = plotRepository.save(plot);
         return  PlotGetResponse.fromDomain(patchedPlot);

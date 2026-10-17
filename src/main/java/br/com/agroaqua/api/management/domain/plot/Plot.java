@@ -19,6 +19,7 @@ public class Plot {
         this.length = length;
         this.width = width;
         this.totalArea = length.multiply(width);
+        validateUsedArea(this.totalArea, usedArea);
         this.usedArea = usedArea;
         this.availableArea = this.totalArea.subtract(usedArea);
     }
@@ -77,38 +78,68 @@ public class Plot {
         this.cropId = newCropId;
     }
 
-    public void changeUsedArea(BigDecimal newUsedArea) {
-        if (newUsedArea == null) {
-            throw new IllegalArgumentException("New used area cannot be null");
-        } else if (newUsedArea.compareTo(totalArea) > 0) {
-            throw new IllegalArgumentException("New used area cannot be greater than total area");
+    public void changeWidthLengthUsedArea(BigDecimal newWidth, BigDecimal newLength, BigDecimal newUsedArea) {
+        if (newWidth == null) {
+            newWidth = this.width;
         }
-        this.usedArea = newUsedArea;
-    }
-
-    public void changeWidth(BigDecimal newWidth) {
-        if (newWidth == null || newWidth.compareTo(BigDecimal.ZERO) <= 0) {
+        if (newLength == null) {
+            newLength = this.length;
+        }
+        if (newUsedArea == null) {
+            newUsedArea = this.usedArea;
+        }
+        if (newWidth.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("New width cannot be negative or zero");
         }
-        this.width = newWidth;
-    }
-
-    public void changeLength(BigDecimal newLength) {
-        if (newLength == null || newLength.compareTo(BigDecimal.ZERO) <= 0) {
+        if (newLength.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("New length cannot be negative or zero");
         }
+        if (newUsedArea.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("New used area cannot be negative");
+        }
+
         this.length = newLength;
+        this.width = newWidth;
+
+        BigDecimal newTotalArea = newLength.multiply(newWidth);
+        this.totalArea = newTotalArea;
+
+        if(newUsedArea.compareTo(newTotalArea) > 0) {
+            throw new IllegalArgumentException("New used area cannot be greater than the total area");
+        }
+        this.usedArea = newUsedArea;
+
+        this.availableArea = newTotalArea.subtract(newUsedArea);
     }
 
     private void validadeInput(BigDecimal length, BigDecimal width, BigDecimal usedArea, String code){
         if(length == null) {
             throw new IllegalArgumentException("Length cannot be null");
-        } else if(width == null) {
+        } else if (length.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Length cannot be negative or zero");
+        }
+
+        if(width == null) {
             throw new IllegalArgumentException("Width cannot be null");
-        } else if(usedArea == null) {
+        } else if (width.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Width cannot be negative or zero");
+        }
+
+        if(usedArea == null) {
             throw new IllegalArgumentException("UsedArea cannot be null");
-        } else if(code == null) {
+        } else if (usedArea.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("UsedArea cannot be negative");
+        }
+
+        if(code == null) {
             throw new IllegalArgumentException("Code cannot be null");
         }
     }
+
+    private void validateUsedArea(BigDecimal totalArea, BigDecimal usedArea) {
+        if (totalArea.compareTo(usedArea) < 0) {
+            throw new IllegalArgumentException("Used Area cannot be greater than the total area");
+        }
+    }
+
 }
