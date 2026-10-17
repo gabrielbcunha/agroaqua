@@ -43,6 +43,20 @@ public class Sensor {
         return apiKeyHash;
     }
 
+    public void changeCode(String newCode) {
+        if (newCode == null) {
+            throw new IllegalArgumentException("newCode cannot be null");
+        }
+        this.code = newCode;
+    }
+
+    public void changePlotId(Long plotId) {
+        if (plotId == null) {
+            throw new IllegalArgumentException("plotId cannot be null");
+        }
+        this.plotId = plotId;
+    }
+
     public void validadeInput(String code, Long plotId, String apiKeyHash) {
         if(code == null){
             throw new IllegalArgumentException("code cannot be null");
