@@ -55,6 +55,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/plot/{id}").hasAnyAuthority("ADMIN", "EMPLOYEE_MANAGER", "EMPLOYEE_WORKER")
                         .requestMatchers(HttpMethod.GET, "/api/plot/code/{code}").hasAnyAuthority("ADMIN", "EMPLOYEE_MANAGER", "EMPLOYEE_WORKER")
                         .requestMatchers(HttpMethod.GET, "/api/plot/crop/{cropId}").hasAnyAuthority("ADMIN", "EMPLOYEE_MANAGER", "EMPLOYEE_WORKER")
+                        .requestMatchers(HttpMethod.PATCH, "/api/plot/{id}").hasAnyAuthority("ADMIN", "EMPLOYEE_MANAGER", "EMPLOYEE_WORKER")
                         //========================== Handling ===============================
                         .requestMatchers(HttpMethod.POST, "/api/handling").hasAnyAuthority("ADMIN", "EMPLOYEE_MANAGER", "EMPLOYEE_WORKER")
                         .requestMatchers(HttpMethod.GET, "/api/handling").hasAnyAuthority("ADMIN", "EMPLOYEE_MANAGER", "EMPLOYEE_WORKER")

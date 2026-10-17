@@ -18,9 +18,8 @@ public class Plot {
         this.cropId = cropId;
         this.length = length;
         this.width = width;
-        this.usedArea = usedArea;
-
         this.totalArea = length.multiply(width);
+        this.usedArea = usedArea;
         this.availableArea = this.totalArea.subtract(usedArea);
     }
 
@@ -62,6 +61,43 @@ public class Plot {
 
     public BigDecimal getUsedArea() {
         return usedArea;
+    }
+
+    public void changeCode(String newCode) {
+        if (newCode == null) {
+            throw new IllegalArgumentException("New code cannot be null");
+        }
+        this.code = newCode;
+    }
+
+    public void changeCropId(Long newCropId) {
+        if (newCropId == null) {
+            throw new IllegalArgumentException("New crop id cannot be null");
+        }
+        this.cropId = newCropId;
+    }
+
+    public void changeUsedArea(BigDecimal newUsedArea) {
+        if (newUsedArea == null) {
+            throw new IllegalArgumentException("New used area cannot be null");
+        } else if (newUsedArea.compareTo(totalArea) > 0) {
+            throw new IllegalArgumentException("New used area cannot be greater than total area");
+        }
+        this.usedArea = newUsedArea;
+    }
+
+    public void changeWidth(BigDecimal newWidth) {
+        if (newWidth == null || newWidth.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("New width cannot be negative or zero");
+        }
+        this.width = newWidth;
+    }
+
+    public void changeLength(BigDecimal newLength) {
+        if (newLength == null || newLength.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("New length cannot be negative or zero");
+        }
+        this.length = newLength;
     }
 
     private void validadeInput(BigDecimal length, BigDecimal width, BigDecimal usedArea, String code){
