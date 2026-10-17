@@ -57,6 +57,13 @@ public class Sensor {
         this.plotId = plotId;
     }
 
+    public void deactivate() {
+        if (!this.active){
+            throw new IllegalStateException("Sensor is already deactivated");
+        }
+        this.active = false;
+    }
+
     public void validadeInput(String code, Long plotId, String apiKeyHash) {
         if(code == null){
             throw new IllegalArgumentException("code cannot be null");

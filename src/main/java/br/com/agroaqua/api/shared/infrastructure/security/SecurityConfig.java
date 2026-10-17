@@ -70,6 +70,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/sensor/{id}").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/sensor/code/{sensorCode}").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.PATCH, "/api/sensor/{id}").hasAnyAuthority("ADMIN", "EMPLOYEE_MANAGER")
+                        .requestMatchers(HttpMethod.PATCH, "/api/sensor/{id}/deactivate").hasAnyAuthority("ADMIN", "EMPLOYEE_MANAGER")
                         //========================== Measurement ============================
                         .requestMatchers(HttpMethod.GET, "/api/measurement").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/measurement/{id}").hasAuthority("ADMIN")
