@@ -3,7 +3,9 @@ package br.com.agroaqua.api.management.infrastructure.controller.crop;
 import br.com.agroaqua.api.management.application.dto.crop.create.CropCreateRequest;
 import br.com.agroaqua.api.management.application.dto.crop.create.CropCreateResponse;
 import br.com.agroaqua.api.management.application.dto.crop.get.CropGetResponse;
+import br.com.agroaqua.api.management.application.dto.crop.patch.CropPatchRequest;
 import br.com.agroaqua.api.management.application.usecase.crop.FindCropUseCase;
+import br.com.agroaqua.api.management.application.usecase.crop.PatchCropUseCase;
 import br.com.agroaqua.api.management.application.usecase.crop.RegisterNewCropUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +19,12 @@ public class CropController {
 
     private final RegisterNewCropUseCase registerNewCropUseCase;
     private final FindCropUseCase findCropUseCase;
+    private final PatchCropUseCase patchCropUseCase;
 
-    public CropController(RegisterNewCropUseCase registerNewCropUseCase, FindCropUseCase findCropUseCase) {
+    public CropController(RegisterNewCropUseCase registerNewCropUseCase, FindCropUseCase findCropUseCase, PatchCropUseCase patchCropUseCase) {
         this.registerNewCropUseCase = registerNewCropUseCase;
         this.findCropUseCase = findCropUseCase;
+        this.patchCropUseCase = patchCropUseCase;
     }
 
     @PostMapping()
@@ -38,6 +42,12 @@ public class CropController {
     @GetMapping("/{id}")
     public ResponseEntity<CropGetResponse> findCropById(@PathVariable Long id) {
         CropGetResponse response = findCropUseCase.findById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<CropGetResponse> updateCrop(@PathVariable Long id, @RequestBody CropPatchRequest request) {
+        CropGetResponse response = patchCropUseCase.execute(id, request);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

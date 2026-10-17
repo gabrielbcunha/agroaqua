@@ -45,6 +45,34 @@ public class Crop {
         return name;
     }
 
+    public void changeName(String newName) {
+        if (newName == null || newName.trim().isEmpty()) {
+            throw new IllegalArgumentException("new Name cannot be null or empty");
+        }
+        this.name = newName;
+    }
+
+    public void changeDescription(String newDescription) {
+        if (newDescription == null || newDescription.trim().isEmpty()) {
+            throw new IllegalArgumentException("new Description cannot be null or empty");
+        }
+        this.description = newDescription;
+    }
+
+    public void changeNormalHumidity(BigDecimal newNormalHumidity) {
+        if (newNormalHumidity == null || newNormalHumidity.compareTo(BigDecimal.ZERO) == 0) {
+            throw new IllegalArgumentException("new NormalHumidity cannot be null or Zero");
+        }
+        this.normalHumidity = newNormalHumidity;
+    }
+
+    public void changeStandardTimeToGrowInDays(int newStandardTimeToGrowInDays) {
+        if (newStandardTimeToGrowInDays < 0 ||  newStandardTimeToGrowInDays == 0) {
+            throw new IllegalArgumentException("New Standard Time To Grow In Days cannot be negative or Zero");
+        }
+        this.standardTimeToGrowInDays = newStandardTimeToGrowInDays;
+    }
+
     public void validateInput(String name, String description, BigDecimal normalHumidity, int standartTimeToGrow){
         if(name == null) {
             throw new IllegalArgumentException("Name cannot be null");
