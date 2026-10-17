@@ -8,7 +8,7 @@ public class Sensor {
     private String apiKeyHash;
 
     public Sensor(String code, Long plotId, boolean active, String apiKeyHash) {
-        validadeInput(code, plotId, apiKeyHash);
+        validateInput(code, plotId, apiKeyHash);
         this.code = code;
         this.plotId = plotId;
         this.active = active;
@@ -64,7 +64,7 @@ public class Sensor {
         this.active = false;
     }
 
-    public void validadeInput(String code, Long plotId, String apiKeyHash) {
+    public void validateInput(String code, Long plotId, String apiKeyHash) {
         if(code == null){
             throw new IllegalArgumentException("code cannot be null");
         } else if(plotId == null){
