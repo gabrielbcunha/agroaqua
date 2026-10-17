@@ -1,8 +1,8 @@
 package br.com.agroaqua.api.admin.application.controller;
 
 import br.com.agroaqua.api.admin.application.usecase.AdminOnboardingUseCase;
-import br.com.agroaqua.api.admin.application.dto.AdminOnboardingRequest;
-import br.com.agroaqua.api.admin.application.dto.AdminOnboardingResponse;
+import br.com.agroaqua.api.admin.application.dto.on.AdminOnboardingRequest;
+import br.com.agroaqua.api.admin.application.dto.on.AdminOnboardingResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

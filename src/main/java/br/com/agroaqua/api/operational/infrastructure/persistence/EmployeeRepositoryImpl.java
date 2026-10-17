@@ -33,6 +33,12 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     }
 
     @Override
+    public Optional<Employee> findByUserId(Long userId) {
+        return employeeSpringDataRepository.findByUserId(userId)
+                .map(employeeMapper::toDomain);
+    }
+
+    @Override
     public List<Employee> findAll() {
         return employeeSpringDataRepository.findAll()
                 .stream().map(employeeMapper::toDomain).toList();

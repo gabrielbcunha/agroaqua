@@ -45,4 +45,11 @@ public class Employee {
         }
         this.name = newName;
     }
+
+    public void anonymizeEmployee(String anonymizedName) {
+        if (anonymizedName == null || anonymizedName.trim().isEmpty()) {
+            throw new IllegalArgumentException("Anonymized name cannot be null");
+        }
+        this.name = anonymizedName;
+    }
 }

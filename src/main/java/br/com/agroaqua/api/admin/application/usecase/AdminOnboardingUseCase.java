@@ -1,7 +1,7 @@
 package br.com.agroaqua.api.admin.application.usecase;
 
-import br.com.agroaqua.api.admin.application.dto.AdminOnboardingRequest;
-import br.com.agroaqua.api.admin.application.dto.AdminOnboardingResponse;
+import br.com.agroaqua.api.admin.application.dto.on.AdminOnboardingRequest;
+import br.com.agroaqua.api.admin.application.dto.on.AdminOnboardingResponse;
 import br.com.agroaqua.api.identity.application.dto.create.UserCreateRequest;
 import br.com.agroaqua.api.identity.application.usecase.RegisterNewUserUseCase;
 import br.com.agroaqua.api.operational.application.dto.create.EmployeeCreateRequest;

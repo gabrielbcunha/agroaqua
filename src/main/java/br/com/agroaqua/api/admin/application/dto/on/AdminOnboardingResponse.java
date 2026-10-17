@@ -1,4 +1,4 @@
-package br.com.agroaqua.api.admin.application.dto;
+package br.com.agroaqua.api.admin.application.dto.on;
 
 import br.com.agroaqua.api.shared.domain.Role;
 

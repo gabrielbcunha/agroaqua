@@ -70,4 +70,18 @@ public class User {
         this.role = newRole;
     }
 
+    public void anonymizeEmail(String anonymizedEmail) {
+        if (anonymizedEmail == null || anonymizedEmail.trim().isEmpty()) {
+            throw new IllegalArgumentException("Anonymized email cannot be null or blank");
+        }
+        this.email = anonymizedEmail;
+    }
+
+    public void anonymizePassword(String anonymizedPassword) {
+        if (anonymizedPassword == null || anonymizedPassword.trim().isEmpty()) {
+            throw new IllegalArgumentException("Anonymized password cannot be null or blank");
+        }
+        this.password = anonymizedPassword;
+    }
+
 }
