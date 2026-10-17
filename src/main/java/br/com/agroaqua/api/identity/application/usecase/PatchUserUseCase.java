@@ -13,6 +13,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PatchUserUseCase {
@@ -29,6 +30,7 @@ public class PatchUserUseCase {
         this.authenticationManager = authenticationManager;
     }
 
+    @Transactional
     public UserGetResponse execute(Long id, UserPatchRequest request) throws BadRequestException {
 
         if (id == null) {

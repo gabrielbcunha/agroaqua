@@ -5,6 +5,7 @@ import br.com.agroaqua.api.management.application.dto.handling.patch.HandlingPat
 import br.com.agroaqua.api.management.domain.handling.Handling;
 import br.com.agroaqua.api.management.domain.handling.HandlingRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PatchHandlingUseCase {
@@ -15,6 +16,7 @@ public class PatchHandlingUseCase {
         this.handlingRepository = handlingRepository;
     }
 
+    @Transactional
     public HandlingGetResponse execute(Long id, HandlingPatchRequest request) {
 
         if (id == null) {

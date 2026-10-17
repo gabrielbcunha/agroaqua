@@ -5,6 +5,7 @@ import br.com.agroaqua.api.management.application.dto.crop.patch.CropPatchReques
 import br.com.agroaqua.api.management.domain.crop.Crop;
 import br.com.agroaqua.api.management.domain.crop.CropRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
@@ -17,6 +18,7 @@ public class PatchCropUseCase {
         this.cropRepository = cropRepository;
     }
 
+    @Transactional
     public CropGetResponse execute(Long id, CropPatchRequest request) {
 
         if (id == null) {
