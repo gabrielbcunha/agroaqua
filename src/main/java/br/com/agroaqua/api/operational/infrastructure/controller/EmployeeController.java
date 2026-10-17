@@ -1,13 +1,12 @@
 package br.com.agroaqua.api.operational.infrastructure.controller;
 
 import br.com.agroaqua.api.operational.application.dto.get.EmployeeGetResponse;
+import br.com.agroaqua.api.operational.application.dto.patch.EmployeePatchRequest;
 import br.com.agroaqua.api.operational.application.usecase.FindEmployeeUseCase;
+import br.com.agroaqua.api.operational.application.usecase.PatchEmployeeUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,9 +15,11 @@ import java.util.List;
 public class EmployeeController {
 
     private final FindEmployeeUseCase findEmployeeUseCase;
+    private final PatchEmployeeUseCase patchEmployeeUseCase;
 
-    public EmployeeController(FindEmployeeUseCase findEmployeeUseCase) {
+    public EmployeeController(FindEmployeeUseCase findEmployeeUseCase, PatchEmployeeUseCase patchEmployeeUseCase) {
         this.findEmployeeUseCase = findEmployeeUseCase;
+        this.patchEmployeeUseCase = patchEmployeeUseCase;
     }
 
     @GetMapping
@@ -32,4 +33,11 @@ public class EmployeeController {
         EmployeeGetResponse response = findEmployeeUseCase.findById(id);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<EmployeeGetResponse> updateEmployee(@PathVariable Long id, @RequestBody EmployeePatchRequest request) {
+        EmployeeGetResponse response = patchEmployeeUseCase.execute(id, request);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
 }

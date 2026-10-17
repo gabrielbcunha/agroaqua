@@ -44,6 +44,7 @@ public class SecurityConfig {
                         //========================== Employee ===============================
                         .requestMatchers(HttpMethod.GET, "/api/employee").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/employee/{id}").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/api/employee/{id}").hasAnyAuthority("ADMIN", "EMPLOYEE_MANAGER", "EMPLOYEE_WORKER")
                         //============================ Crop =================================
                         .requestMatchers(HttpMethod.POST, "/api/crop").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/crop").hasAnyAuthority("ADMIN", "EMPLOYEE_MANAGER", "EMPLOYEE_WORKER")

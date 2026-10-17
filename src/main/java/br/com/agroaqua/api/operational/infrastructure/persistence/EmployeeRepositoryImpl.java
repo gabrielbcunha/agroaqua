@@ -20,9 +20,10 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     }
 
     @Override
-    public void save(Employee employee) {
+    public Employee save(Employee employee) {
         EmployeeJpaEntity jpaEntity = employeeMapper.toJpaEntity(employee);
-        employeeSpringDataRepository.save(jpaEntity);
+        EmployeeJpaEntity savedEntity = employeeSpringDataRepository.save(jpaEntity);
+        return employeeMapper.toDomain(savedEntity);
     }
 
     @Override

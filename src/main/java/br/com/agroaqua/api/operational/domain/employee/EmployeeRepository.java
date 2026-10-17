@@ -5,7 +5,7 @@ import java.util.Optional;
 
 public interface EmployeeRepository {
 
-    void save(Employee employee);
+    Employee save(Employee employee);
 
     Optional<Employee> findById(Long id);
 

@@ -38,4 +38,11 @@ public class Employee {
     public String getName() {
         return name;
     }
+
+    public void changeName(String newName) {
+        if (newName == null || newName.trim().isEmpty()) {
+            throw new IllegalArgumentException("Name cannot be null");
+        }
+        this.name = newName;
+    }
 }
