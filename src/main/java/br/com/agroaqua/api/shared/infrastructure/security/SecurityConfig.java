@@ -38,7 +38,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         //=========================== Auth ==================================
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.PATCH, "/auth/{id}").permitAll()
+                        .requestMatchers(HttpMethod.PATCH, "/auth/{id}").hasAnyAuthority("EMPLOYEE_MANAGER", "EMPLOYEE_WORKER", "ADMIN")
                         //=========================== Admin =================================
                         .requestMatchers(HttpMethod.POST, "/api/admin/onboarding/employees").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/admin/offboarding/{userId}").hasAuthority("ADMIN")
