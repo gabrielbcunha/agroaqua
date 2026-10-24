@@ -6,8 +6,10 @@ import br.com.agroaqua.api.operational.application.usecase.FindEmployeeUseCase;
 import br.com.agroaqua.api.operational.application.usecase.PatchEmployeeUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @RestController
@@ -35,7 +37,10 @@ public class EmployeeController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<EmployeeGetResponse> updateEmployee(@PathVariable Long id, @RequestBody EmployeePatchRequest request) {
+    public ResponseEntity<EmployeeGetResponse> updateEmployee(
+            @PathVariable Long id,
+            @RequestBody EmployeePatchRequest request
+    ) throws AccessDeniedException {
         EmployeeGetResponse response = patchEmployeeUseCase.execute(id, request);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
