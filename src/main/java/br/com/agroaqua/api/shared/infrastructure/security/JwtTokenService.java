@@ -40,6 +40,6 @@ public class JwtTokenService {
     }
 
     public Key getSignatureKey() {
-        return Keys.hmacShaKeyFor(secretKey.getBytes());
+        return Keys.hmacShaKeyFor(secretKey.getBytes(java.nio.charset.StandardCharsets.UTF_8));
     }
 }
