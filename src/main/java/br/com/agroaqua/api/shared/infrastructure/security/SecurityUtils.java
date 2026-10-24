@@ -25,4 +25,19 @@ public class SecurityUtils {
         }
         throw new AccessDeniedException("User not authenticated");
     }
+
+    public String getLoggedUsername() throws AccessDeniedException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new AccessDeniedException("User not authenticated");
+        }
+
+        Object principal = authentication.getPrincipal();
+
+        if (principal instanceof UserJpaEntity userJpa) {
+            return userJpa.getUsername();
+        }
+        throw new AccessDeniedException("User not authenticated");
+    }
 }
