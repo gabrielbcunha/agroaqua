@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @RestController
@@ -28,7 +29,7 @@ public class HandlingController {
     }
 
     @PostMapping()
-    public ResponseEntity<HandlingCreateResponse> registerHandling(@RequestBody HandlingCreateRequest request) {
+    public ResponseEntity<HandlingCreateResponse> registerHandling(@RequestBody HandlingCreateRequest request) throws AccessDeniedException {
         HandlingCreateResponse response = registerNewHandlingUseCase.execute(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -58,7 +59,7 @@ public class HandlingController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<HandlingGetResponse> updateHandling(@PathVariable Long id, @RequestBody HandlingPatchRequest request) {
+    public ResponseEntity<HandlingGetResponse> updateHandling(@PathVariable Long id, @RequestBody HandlingPatchRequest request) throws AccessDeniedException {
         HandlingGetResponse response = patchHandlingUseCase.execute(id, request);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
