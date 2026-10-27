@@ -85,21 +85,17 @@ public class Handling {
         this.description = newDescription;
     }
 
-    public void changeStartDateTime(LocalDateTime newStartDateTime) {
+    public void changePeriod(LocalDateTime newStartDateTime, LocalDateTime newEndDateTime) {
         if (newStartDateTime == null) {
-            throw new IllegalArgumentException("New Start DateTime cannot be null");
-        } else if (newStartDateTime.isAfter(endDateTime)) {
-            throw new IllegalArgumentException("New Start DateTime cannot be after end DateTime");
+            newStartDateTime = this.startDateTime;
+        }
+        if (newEndDateTime == null) {
+            newEndDateTime = this.endDateTime;
+        }
+        if (newStartDateTime.isAfter(newEndDateTime)) {
+            throw new IllegalArgumentException("Start date cannot be after end date");
         }
         this.startDateTime = newStartDateTime;
-    }
-
-    public void changeEndDateTime(LocalDateTime newEndDateTime) {
-        if (newEndDateTime == null) {
-            throw new IllegalArgumentException("New End DateTime cannot be null");
-        } else if (newEndDateTime.isBefore(startDateTime)) {
-            throw new IllegalArgumentException("New End DateTime cannot be before start DateTime");
-        }
         this.endDateTime = newEndDateTime;
     }
 

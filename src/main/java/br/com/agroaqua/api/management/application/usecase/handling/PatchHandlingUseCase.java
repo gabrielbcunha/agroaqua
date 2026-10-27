@@ -21,7 +21,7 @@ public class PatchHandlingUseCase {
     private final SecurityUtils securityUtils;
     private final EmployeeRepository employeeRepository;
 
-    public PatchHandlingUseCase(HandlingRepository handlingRepository, SecurityUtils securityUtils, JwtTokenService jwtTokenService, EmployeeRepository employeeRepository) {
+    public PatchHandlingUseCase(HandlingRepository handlingRepository, SecurityUtils securityUtils, EmployeeRepository employeeRepository) {
         this.handlingRepository = handlingRepository;
         this.securityUtils = securityUtils;
         this.employeeRepository = employeeRepository;
@@ -66,13 +66,7 @@ public class PatchHandlingUseCase {
             handling.changeDescription(request.description());
         }
 
-        if (request.startDateTime() != null) {
-            handling.changeStartDateTime(request.startDateTime());
-        }
-
-        if (request.endDateTime() != null) {
-            handling.changeEndDateTime(request.endDateTime());
-        }
+        handling.changePeriod(request.startDateTime(), request.endDateTime());
 
         Handling patchedHandling = handlingRepository.save(handling);
         return HandlingGetResponse.fromDomain(patchedHandling);
