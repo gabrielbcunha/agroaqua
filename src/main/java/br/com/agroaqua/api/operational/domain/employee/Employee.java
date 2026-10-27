@@ -22,8 +22,8 @@ public class Employee {
     private void validateInput(Long userId,String name) {
         if(userId == null) {
         throw new IllegalArgumentException("User Id cannot be null");
-        } else if (name.isBlank()) {
-            throw new IllegalArgumentException("Name cannot be blank");
+        } else if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Name cannot be null or blank");
         }
     }
 
@@ -40,15 +40,15 @@ public class Employee {
     }
 
     public void changeName(String newName) {
-        if (newName == null || newName.trim().isEmpty()) {
-            throw new IllegalArgumentException("Name cannot be null");
+        if (newName == null || newName.isBlank()) {
+            throw new IllegalArgumentException("Name cannot be null or blank");
         }
         this.name = newName;
     }
 
     public void anonymizeEmployee(String anonymizedName) {
-        if (anonymizedName == null || anonymizedName.trim().isEmpty()) {
-            throw new IllegalArgumentException("Anonymized name cannot be null");
+        if (anonymizedName == null || anonymizedName.isBlank()) {
+            throw new IllegalArgumentException("Anonymized name cannot be null or blank");
         }
         this.name = anonymizedName;
     }
