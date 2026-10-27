@@ -79,8 +79,8 @@ public class Handling {
     }
 
     public void changeDescription(String newDescription) {
-        if (newDescription == null) {
-            throw new IllegalArgumentException("New Description cannot be null");
+        if (newDescription == null || newDescription.isBlank()) {
+            throw new IllegalArgumentException("New Description cannot be null or blank");
         }
         this.description = newDescription;
     }
@@ -106,8 +106,8 @@ public class Handling {
             throw new IllegalArgumentException("Plot ID cannot be null");
         } else if(category == null) {
             throw new IllegalArgumentException("Category cannot be null");
-        } else if(description == null) {
-            throw new IllegalArgumentException("Description cannot be null");
+        } else if(description == null || description.isBlank()) {
+            throw new IllegalArgumentException("Description cannot be null or blank");
         } else if(startDateTime == null) {
             throw new IllegalArgumentException("Start date cannot be null");
         } else if(endDateTime == null) {

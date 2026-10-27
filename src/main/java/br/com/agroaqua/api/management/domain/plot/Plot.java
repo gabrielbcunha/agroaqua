@@ -65,8 +65,8 @@ public class Plot {
     }
 
     public void changeCode(String newCode) {
-        if (newCode == null) {
-            throw new IllegalArgumentException("New code cannot be null");
+        if (newCode == null || newCode.isBlank()) {
+            throw new IllegalArgumentException("New code cannot be null or blank");
         }
         this.code = newCode;
     }
@@ -131,8 +131,8 @@ public class Plot {
             throw new IllegalArgumentException("UsedArea cannot be negative");
         }
 
-        if(code == null) {
-            throw new IllegalArgumentException("Code cannot be null");
+        if(code == null || code.isBlank()) {
+            throw new IllegalArgumentException("Code cannot be null or blank");
         }
     }
 

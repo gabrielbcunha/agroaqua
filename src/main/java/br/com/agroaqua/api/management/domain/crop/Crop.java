@@ -9,16 +9,16 @@ public class Crop {
     private BigDecimal normalHumidity;
     private int standardTimeToGrowInDays;
 
-    public Crop(String name, String description, BigDecimal normalHumidity, int standartTimeToGrow) {
-        validateInput(name, description, normalHumidity, standartTimeToGrow);
+    public Crop(String name, String description, BigDecimal normalHumidity, int standardTimeToGrow) {
+        validateInput(name, description, normalHumidity, standardTimeToGrow);
         this.name = name;
         this.description = description;
         this.normalHumidity = normalHumidity;
-        this.standardTimeToGrowInDays = standartTimeToGrow;
+        this.standardTimeToGrowInDays = standardTimeToGrow;
     }
 
-    public Crop(Long id, String name, String description, BigDecimal normalHumidity, int standartTimeToGrow) {
-        this(name, description, normalHumidity, standartTimeToGrow);
+    public Crop(Long id, String name, String description, BigDecimal normalHumidity, int standardTimeToGrow) {
+        this(name, description, normalHumidity, standardTimeToGrow);
         if(id == null) {
             throw new IllegalArgumentException("Id cannot be null");
         }
@@ -46,15 +46,15 @@ public class Crop {
     }
 
     public void changeName(String newName) {
-        if (newName == null || newName.trim().isEmpty()) {
-            throw new IllegalArgumentException("new Name cannot be null or empty");
+        if (newName == null || newName.isBlank()) {
+            throw new IllegalArgumentException("new Name cannot be null or blank");
         }
         this.name = newName;
     }
 
     public void changeDescription(String newDescription) {
-        if (newDescription == null || newDescription.trim().isEmpty()) {
-            throw new IllegalArgumentException("new Description cannot be null or empty");
+        if (newDescription == null || newDescription.isBlank()) {
+            throw new IllegalArgumentException("new Description cannot be null or blank");
         }
         this.description = newDescription;
     }
@@ -73,14 +73,14 @@ public class Crop {
         this.standardTimeToGrowInDays = newStandardTimeToGrowInDays;
     }
 
-    public void validateInput(String name, String description, BigDecimal normalHumidity, int standartTimeToGrow){
-        if(name == null) {
-            throw new IllegalArgumentException("Name cannot be null");
-        } else if(description == null) {
-            throw new IllegalArgumentException("Description cannot be null");
+    public void validateInput(String name, String description, BigDecimal normalHumidity, int standardTimeToGrow){
+        if(name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Name cannot be null or blank");
+        } else if(description == null || description.isBlank()) {
+            throw new IllegalArgumentException("Description cannot be null or blank");
         } else if(normalHumidity == null) {
             throw new IllegalArgumentException("NormalHumidity cannot be null");
-        } else if(standartTimeToGrow <= 0) {
+        } else if(standardTimeToGrow <= 0) {
             throw new IllegalArgumentException("StandardTimeToGrowInDays cannot be negative or zero");
         }
     }
