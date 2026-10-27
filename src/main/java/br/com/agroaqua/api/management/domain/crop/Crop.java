@@ -60,8 +60,10 @@ public class Crop {
     }
 
     public void changeNormalHumidity(BigDecimal newNormalHumidity) {
-        if (newNormalHumidity == null || newNormalHumidity.compareTo(BigDecimal.ZERO) == 0) {
-            throw new IllegalArgumentException("new NormalHumidity cannot be null or Zero");
+        if (newNormalHumidity == null) {
+            throw new IllegalArgumentException("new NormalHumidity cannot be null");
+        } else if (newNormalHumidity.compareTo(BigDecimal.ZERO) <= 0 || newNormalHumidity.compareTo(new BigDecimal("100")) > 0) {
+            throw new IllegalArgumentException("NormalHumidity cannot be less than or equal to 0, nor greater than 100.");
         }
         this.normalHumidity = newNormalHumidity;
     }
@@ -78,9 +80,12 @@ public class Crop {
             throw new IllegalArgumentException("Name cannot be null or blank");
         } else if(description == null || description.isBlank()) {
             throw new IllegalArgumentException("Description cannot be null or blank");
-        } else if(normalHumidity == null) {
+        } else if (normalHumidity == null) {
             throw new IllegalArgumentException("NormalHumidity cannot be null");
-        } else if(standardTimeToGrow <= 0) {
+        } else if(normalHumidity.compareTo(BigDecimal.ZERO) <= 0 || normalHumidity.compareTo(new BigDecimal("100")) > 0) {
+         throw new IllegalArgumentException("NormalHumidity cannot be less than or equal to 0, nor greater than 100.");
+        }
+        else if(standardTimeToGrow <= 0) {
             throw new IllegalArgumentException("StandardTimeToGrowInDays cannot be negative or zero");
         }
     }
