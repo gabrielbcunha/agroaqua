@@ -24,10 +24,10 @@ public class User {
     }
 
     private void validateInput(String email, String password, Role role) {
-        if (email.isBlank()) {
-            throw new IllegalArgumentException("Email cannot be blank");
-        } else if (password.isBlank()) {
-            throw new IllegalArgumentException("Password cannot be blank");
+        if (email == null || email.isBlank()) {
+            throw new IllegalArgumentException("Email cannot be null or blank");
+        } else if (password == null || password.isBlank()) {
+            throw new IllegalArgumentException("Password cannot be null blank");
         } else if (role == null) {
             throw new IllegalArgumentException("Role cannot be null");
         }
@@ -50,14 +50,14 @@ public class User {
     }
 
     public void changeEmail(String newEmail) {
-        if (newEmail == null || newEmail.trim().isEmpty()) {
+        if (newEmail == null || newEmail.isBlank()) {
             throw new IllegalArgumentException("New Email cannot be null or blank");
         }
         this.email = newEmail;
     }
 
     public void changePassword(String newPassword) {
-        if (newPassword == null || newPassword.trim().isEmpty()) {
+        if (newPassword == null || newPassword.isBlank()) {
             throw new IllegalArgumentException("New Password cannot be null or blank");
         }
         this.password = newPassword;
@@ -71,14 +71,14 @@ public class User {
     }
 
     public void anonymizeEmail(String anonymizedEmail) {
-        if (anonymizedEmail == null || anonymizedEmail.trim().isEmpty()) {
+        if (anonymizedEmail == null || anonymizedEmail.isBlank()) {
             throw new IllegalArgumentException("Anonymized email cannot be null or blank");
         }
         this.email = anonymizedEmail;
     }
 
     public void anonymizePassword(String anonymizedPassword) {
-        if (anonymizedPassword == null || anonymizedPassword.trim().isEmpty()) {
+        if (anonymizedPassword == null || anonymizedPassword.isBlank()) {
             throw new IllegalArgumentException("Anonymized password cannot be null or blank");
         }
         this.password = anonymizedPassword;
