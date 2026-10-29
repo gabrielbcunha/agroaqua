@@ -27,14 +27,17 @@ public class RegisterNewMeasurementUseCase {
 
     @Transactional
     public MeasurementCreateResponse execute(MeasurementCreateRequest request, String apiKey) {
-        Sensor sensor = sensorRepository.findById(request.sensorId())
-                .orElseThrow(() -> new IllegalArgumentException("Sensor id not found"));
-       if (!sensor.isActive()) {
-           throw new IllegalArgumentException("Sensor is not active");
-       }
-       if (apiKey == null || !passwordEncoder.matches(apiKey, sensor.getApiKeyHash())) {
-           throw new org.springframework.security.access.AccessDeniedException("Invalid sensor api key");
-       }
+        Sensor sensor = sensorRepository.findById(request.sensorId()).orElse(null);
+
+        boolean isAuthenticated = false;
+
+        if (sensor != null && sensor.isActive() && apiKey != null) {
+            isAuthenticated = passwordEncoder.matches(apiKey, sensor.getApiKeyHash());
+        }
+
+        if (!isAuthenticated) {
+            throw new org.springframework.security.access.AccessDeniedException("Access denied: Invalid credentials or inactive sensor");
+        }
 
         LocalDateTime receivedTime = request.measuredAt();
         if (request.measuredAt() == null) {
@@ -42,15 +45,15 @@ public class RegisterNewMeasurementUseCase {
         }
 
         Measurement measurement = new Measurement(
-                request.sensorId(),
-                request.humidity(),
-                receivedTime);
+            request.sensorId(),
+            request.humidity(),
+            receivedTime);
         Measurement savedMeasurement = measurementRepository.save(measurement);
         return new MeasurementCreateResponse(
-                savedMeasurement.getId(),
-                savedMeasurement.getSensorId(),
-                savedMeasurement.getHumidity(),
-                savedMeasurement.getMeasuredAt()
-                );
-    }
+            savedMeasurement.getId(),
+            savedMeasurement.getSensorId(),
+            savedMeasurement.getHumidity(),
+            savedMeasurement.getMeasuredAt()
+        );
+        }
 }
