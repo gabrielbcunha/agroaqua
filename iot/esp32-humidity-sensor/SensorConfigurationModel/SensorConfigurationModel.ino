@@ -1,6 +1,7 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <WiFi.h>
+#include <WiFiClientSecure.h>
 #include <HTTPClient.h>
 #include <time.h>
 
@@ -10,7 +11,7 @@ const char* WIFI_PASSWORD = "YOUR_WIFI_PASSWORD";
 const char* API_URL = "YOUR_API_URL";
 
 // Sensor ID and ApiKey configuration
-const long SENSOR_ID = 0; //Change to your sensor ID 
+const long SENSOR_ID = 0; //Change to your sensor ID
 const String rawApiKey = "YOUR_SENSOR_API_KEY";
 
 // Implement and configure NTP
@@ -194,9 +195,10 @@ void sendToApi(int pct, const char* mode) {
   int maxRetries = 3;
 
   for (int attempt = 1; attempt <= maxRetries; attempt++) {
-    WiFiClient client;
+    WiFiClientSecure client;
+    client.setInsecure();
     HTTPClient http;
-    
+
     http.begin(client, API_URL);
     http.setConnectTimeout(5000); 
     http.setTimeout(5000);
