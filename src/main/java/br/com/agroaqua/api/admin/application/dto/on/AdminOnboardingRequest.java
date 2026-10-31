@@ -13,7 +13,7 @@ public record AdminOnboardingRequest (
         String email,
 
         @NotBlank(message = "The password field must be filled in")
-        @Size(min=6, message = "The password must have at least 6 characters long")
+        @Size(min=8, message = "The password must have at least 6 characters long")
         String password,
 
         @NotBlank(message = "The name field must be filled in")
