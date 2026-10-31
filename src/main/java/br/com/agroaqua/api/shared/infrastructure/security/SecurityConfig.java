@@ -79,6 +79,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/measurement/sensor/code/{sensorCode}").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/measurement").permitAll()
                         //============================ Others ===============================
+                        .requestMatchers("/swagger-ui/**" , "/v3/api-docs/**").permitAll()
                         .requestMatchers("/error").permitAll()
                         .anyRequest().authenticated()
                 )
