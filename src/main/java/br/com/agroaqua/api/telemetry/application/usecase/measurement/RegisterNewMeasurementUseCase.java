@@ -42,6 +42,10 @@ public class RegisterNewMeasurementUseCase {
         LocalDateTime receivedTime = request.measuredAt();
         if (request.measuredAt() == null) {
             receivedTime = LocalDateTime.now();
+        } else if (request.measuredAt().isAfter(LocalDateTime.now())) {
+            receivedTime = LocalDateTime.now();
+        } else if (request.measuredAt().isBefore(LocalDateTime.now().minusDays(1))) {
+            throw new IllegalArgumentException("The measurement time has expired");
         }
 
         Measurement measurement = new Measurement(
