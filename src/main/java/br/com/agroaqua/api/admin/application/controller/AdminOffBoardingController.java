@@ -3,6 +3,7 @@ package br.com.agroaqua.api.admin.application.controller;
 import br.com.agroaqua.api.admin.application.dto.off.AdminAnonymizeRequest;
 import br.com.agroaqua.api.admin.application.usecase.ProcessingAnonymizationUseCase;
 import br.com.agroaqua.api.shared.domain.event.AnonymizeUserEmployeeEvent;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class AdminOffBoardingController {
     }
 
     @DeleteMapping("/{userId}")
-    ResponseEntity<Void> anonymizeUserEmployee(@PathVariable Long userId, @RequestBody AdminAnonymizeRequest request) throws AccessDeniedException {
+    ResponseEntity<Void> anonymizeUserEmployee(@PathVariable Long userId, @Valid @RequestBody AdminAnonymizeRequest request) throws AccessDeniedException {
         AnonymizeUserEmployeeEvent eventRequest = new AnonymizeUserEmployeeEvent(
                 request.emailConfirmation(),
                 request.passwordConfirmation(),
