@@ -5,6 +5,8 @@ import br.com.agroaqua.api.operational.application.dto.patch.EmployeePatchReques
 import br.com.agroaqua.api.operational.application.usecase.FindEmployeeUseCase;
 import br.com.agroaqua.api.operational.application.usecase.PatchEmployeeUseCase;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,8 +28,8 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<EmployeeGetResponse>> findAllEmployees() {
-        List<EmployeeGetResponse> response = findEmployeeUseCase.findAll();
+    public ResponseEntity<Slice<EmployeeGetResponse>> findAllEmployees(Pageable pageable) {
+        Slice<EmployeeGetResponse> response = findEmployeeUseCase.findAll(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 

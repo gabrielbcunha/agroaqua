@@ -3,9 +3,10 @@ package br.com.agroaqua.api.operational.infrastructure.persistence;
 import br.com.agroaqua.api.operational.domain.employee.Employee;
 import br.com.agroaqua.api.operational.domain.employee.EmployeeRepository;
 import br.com.agroaqua.api.operational.infrastructure.mapper.EmployeeMapper;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -39,8 +40,8 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     }
 
     @Override
-    public List<Employee> findAll() {
-        return employeeSpringDataRepository.findAll()
-                .stream().map(employeeMapper::toDomain).toList();
+    public Slice<Employee> findAll(Pageable pageable) {
+        return employeeSpringDataRepository.findAll(pageable)
+                .map(employeeMapper::toDomain);
     }
 }

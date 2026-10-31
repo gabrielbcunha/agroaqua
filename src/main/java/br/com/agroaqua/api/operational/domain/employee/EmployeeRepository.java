@@ -1,6 +1,8 @@
 package br.com.agroaqua.api.operational.domain.employee;
 
-import java.util.List;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+
 import java.util.Optional;
 
 public interface EmployeeRepository {
@@ -10,6 +12,5 @@ public interface EmployeeRepository {
     Optional<Employee> findById(Long id);
 
     Optional<Employee> findByUserId(Long userId);
-
-    List<Employee> findAll();
+    Slice<Employee> findAll(Pageable pageable);
 }

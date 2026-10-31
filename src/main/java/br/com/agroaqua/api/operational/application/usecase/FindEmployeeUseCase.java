@@ -4,9 +4,10 @@ import br.com.agroaqua.api.operational.application.dto.get.EmployeeGetResponse;
 import br.com.agroaqua.api.operational.domain.employee.Employee;
 import br.com.agroaqua.api.operational.domain.employee.EmployeeRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 public class FindEmployeeUseCase {
@@ -23,10 +24,8 @@ public class FindEmployeeUseCase {
         return EmployeeGetResponse.fromDomain(employee);
     }
 
-    public List<EmployeeGetResponse> findAll(){
-        return employeeRepository.findAll()
-                .stream()
-                .map(EmployeeGetResponse::fromDomain)
-                .toList();
+    public Slice<EmployeeGetResponse> findAll(Pageable pageable) {
+        return employeeRepository.findAll(pageable)
+                .map(EmployeeGetResponse::fromDomain);
     }
 }
