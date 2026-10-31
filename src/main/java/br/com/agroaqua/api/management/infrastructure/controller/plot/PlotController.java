@@ -7,6 +7,7 @@ import br.com.agroaqua.api.management.application.dto.plot.patch.PlotPatchReques
 import br.com.agroaqua.api.management.application.usecase.plot.FindPlotUseCase;
 import br.com.agroaqua.api.management.application.usecase.plot.PatchPlotUseCase;
 import br.com.agroaqua.api.management.application.usecase.plot.RegisterNewPlotUseCase;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class PlotController {
     }
 
     @PostMapping()
-    public ResponseEntity<PlotCreateResponse> registerPlot(@RequestBody PlotCreateRequest request) {
+    public ResponseEntity<PlotCreateResponse> registerPlot(@Valid @RequestBody PlotCreateRequest request) {
         PlotCreateResponse response = registerNewPlotUseCase.execute(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -58,7 +59,7 @@ public class PlotController {
    }
 
    @PatchMapping("/{id}")
-    public ResponseEntity<PlotGetResponse> updatePlot(@PathVariable Long id, @RequestBody PlotPatchRequest request) {
+    public ResponseEntity<PlotGetResponse> updatePlot(@PathVariable Long id, @Valid @RequestBody PlotPatchRequest request) {
         PlotGetResponse response = patchPlotUseCase.execute(id, request);
         return ResponseEntity.status(HttpStatus.OK).body(response);
    }

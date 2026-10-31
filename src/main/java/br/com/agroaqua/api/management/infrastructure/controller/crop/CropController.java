@@ -7,6 +7,7 @@ import br.com.agroaqua.api.management.application.dto.crop.patch.CropPatchReques
 import br.com.agroaqua.api.management.application.usecase.crop.FindCropUseCase;
 import br.com.agroaqua.api.management.application.usecase.crop.PatchCropUseCase;
 import br.com.agroaqua.api.management.application.usecase.crop.RegisterNewCropUseCase;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class CropController {
     }
 
     @PostMapping()
-    public ResponseEntity<CropCreateResponse> registerCrop(@RequestBody CropCreateRequest request) {
+    public ResponseEntity<CropCreateResponse> registerCrop(@Valid @RequestBody CropCreateRequest request) {
         CropCreateResponse response = registerNewCropUseCase.execute(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -46,7 +47,7 @@ public class CropController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<CropGetResponse> updateCrop(@PathVariable Long id, @RequestBody CropPatchRequest request) {
+    public ResponseEntity<CropGetResponse> updateCrop(@PathVariable Long id, @Valid @RequestBody CropPatchRequest request) {
         CropGetResponse response = patchCropUseCase.execute(id, request);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

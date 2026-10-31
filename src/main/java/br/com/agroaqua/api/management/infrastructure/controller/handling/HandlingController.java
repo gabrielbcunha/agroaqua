@@ -7,6 +7,7 @@ import br.com.agroaqua.api.management.application.dto.handling.patch.HandlingPat
 import br.com.agroaqua.api.management.application.usecase.handling.FindHandlingUseCase;
 import br.com.agroaqua.api.management.application.usecase.handling.PatchHandlingUseCase;
 import br.com.agroaqua.api.management.application.usecase.handling.RegisterNewHandlingUseCase;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class HandlingController {
     }
 
     @PostMapping()
-    public ResponseEntity<HandlingCreateResponse> registerHandling(@RequestBody HandlingCreateRequest request) throws AccessDeniedException {
+    public ResponseEntity<HandlingCreateResponse> registerHandling(@Valid @RequestBody HandlingCreateRequest request) throws AccessDeniedException {
         HandlingCreateResponse response = registerNewHandlingUseCase.execute(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -59,7 +60,7 @@ public class HandlingController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<HandlingGetResponse> updateHandling(@PathVariable Long id, @RequestBody HandlingPatchRequest request) throws AccessDeniedException {
+    public ResponseEntity<HandlingGetResponse> updateHandling(@PathVariable Long id, @Valid @RequestBody HandlingPatchRequest request) throws AccessDeniedException {
         HandlingGetResponse response = patchHandlingUseCase.execute(id, request);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
