@@ -28,7 +28,10 @@ public class User {
             throw new IllegalArgumentException("Email cannot be null or blank");
         } else if (password == null || password.isBlank()) {
             throw new IllegalArgumentException("Password cannot be null blank");
-        } else if (role == null) {
+        } else if (password.length() < 8) {
+            throw new IllegalArgumentException("Password must be at least 8 characters long");
+        }
+        else if (role == null) {
             throw new IllegalArgumentException("Role cannot be null");
         }
     }
@@ -59,6 +62,9 @@ public class User {
     public void changePassword(String newPassword) {
         if (newPassword == null || newPassword.isBlank()) {
             throw new IllegalArgumentException("New Password cannot be null or blank");
+        }
+        if (newPassword.length() < 8) {
+            throw new IllegalArgumentException("New Password must be at least 8 characters long");
         }
         this.password = newPassword;
     }
