@@ -137,9 +137,11 @@ public class GlobalExceptionHandler {
             HttpServletRequest request
     )
     {
+        String detailMessage = ex.getMostSpecificCause().getMessage();
+
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
                 HttpStatus.CONFLICT,
-                "Data integrity violation. This record may already exist or violates database constraints."
+                detailMessage
         );
 
         problemDetail.setTitle("Conflict");
