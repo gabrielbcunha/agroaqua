@@ -1,8 +1,8 @@
 package br.com.agroaqua.api.identity.application.usecase;
 
-import br.com.agroaqua.api.identity.application.dto.anonymize.UserAnonymizeResponse;
 import br.com.agroaqua.api.identity.domain.user.User;
 import br.com.agroaqua.api.identity.domain.user.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,13 +10,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class AnonymizeUserUseCase {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public AnonymizeUserUseCase(UserRepository userRepository) {
+    public AnonymizeUserUseCase(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
-    public UserAnonymizeResponse execute(Long id){
+    public void execute(Long id){
         if (id == null){
             throw new IllegalArgumentException("Id cannot be null");
         }
@@ -28,10 +30,8 @@ public class AnonymizeUserUseCase {
         user.anonymizeEmail(anonymizedEmail);
 
         String lockedPassword = java.util.UUID.randomUUID().toString();
-        user.anonymizePassword(lockedPassword);
+        user.anonymizePassword(passwordEncoder.encode(lockedPassword));
 
-        User anonymizedUser = userRepository.save(user);
-        return UserAnonymizeResponse.fromDomain(anonymizedUser);
+        userRepository.save(user);
     }
-
 }
