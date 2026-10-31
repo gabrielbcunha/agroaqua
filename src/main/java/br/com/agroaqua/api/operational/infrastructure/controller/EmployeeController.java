@@ -4,6 +4,7 @@ import br.com.agroaqua.api.operational.application.dto.get.EmployeeGetResponse;
 import br.com.agroaqua.api.operational.application.dto.patch.EmployeePatchRequest;
 import br.com.agroaqua.api.operational.application.usecase.FindEmployeeUseCase;
 import br.com.agroaqua.api.operational.application.usecase.PatchEmployeeUseCase;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -39,7 +40,7 @@ public class EmployeeController {
     @PatchMapping("/{id}")
     public ResponseEntity<EmployeeGetResponse> updateEmployee(
             @PathVariable Long id,
-            @RequestBody EmployeePatchRequest request
+            @Valid @RequestBody EmployeePatchRequest request
     ) throws AccessDeniedException {
         EmployeeGetResponse response = patchEmployeeUseCase.execute(id, request);
         return ResponseEntity.status(HttpStatus.OK).body(response);
