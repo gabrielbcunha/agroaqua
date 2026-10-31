@@ -5,6 +5,7 @@ import br.com.agroaqua.api.telemetry.application.dto.measurement.create.Measurem
 import br.com.agroaqua.api.telemetry.application.dto.measurement.get.MeasurementGetResponse;
 import br.com.agroaqua.api.telemetry.application.usecase.measurement.FindMeasurementUseCase;
 import br.com.agroaqua.api.telemetry.application.usecase.measurement.RegisterNewMeasurementUseCase;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class MeasurementController {
     @PostMapping()
     public ResponseEntity<MeasurementCreateResponse> registerMeasurement(
             @RequestHeader("X-Sensor-Key") String apiKey,
-            @RequestBody MeasurementCreateRequest request){
+            @Valid @RequestBody MeasurementCreateRequest request){
         MeasurementCreateResponse response = registerNewMeasurementUseCase.execute(request, apiKey);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }

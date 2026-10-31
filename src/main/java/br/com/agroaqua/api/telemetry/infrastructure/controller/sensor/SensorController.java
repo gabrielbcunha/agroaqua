@@ -8,6 +8,7 @@ import br.com.agroaqua.api.telemetry.application.usecase.sensor.DeactivateSensor
 import br.com.agroaqua.api.telemetry.application.usecase.sensor.FindSensorUseCase;
 import br.com.agroaqua.api.telemetry.application.usecase.sensor.PatchSensorUseCase;
 import br.com.agroaqua.api.telemetry.application.usecase.sensor.RegisterNewSensorUseCase;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +32,7 @@ public class SensorController {
     }
 
     @PostMapping()
-    public ResponseEntity<SensorCreateResponse> registerSensor(@RequestBody SensorCreateRequest request) {
+    public ResponseEntity<SensorCreateResponse> registerSensor(@Valid @RequestBody SensorCreateRequest request) {
         SensorCreateResponse response = registerNewSensorUseCase.execute(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -55,7 +56,7 @@ public class SensorController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<SensorGetResponse> updateSensor(@PathVariable Long id, @RequestBody SensorPatchRequest request) {
+    public ResponseEntity<SensorGetResponse> updateSensor(@PathVariable Long id, @Valid @RequestBody SensorPatchRequest request) {
         SensorGetResponse response = patchSensorUseCase.execute(id, request);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
