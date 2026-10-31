@@ -9,10 +9,10 @@ public record UserPatchRequest(
         @Email(message = "The email format is invalid")
         String email,
 
-        @Size(min=6, message = "The password must have at least 6 characters long")
+        @Size(min=8, message = "The password must have at least 6 characters long")
         String password,
 
         @NotBlank(message = "The password field must be filled in")
-        @Size(min=6, message = "The password must have at least 6 characters long")
+        @Size(min=8, message = "The password must have at least 8 characters long")
         String currentPassword
 ) { }
