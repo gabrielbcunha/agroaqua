@@ -6,6 +6,8 @@ import br.com.agroaqua.api.telemetry.infrastructure.mapper.measurement.Measureme
 import br.com.agroaqua.api.telemetry.infrastructure.persistence.sensor.SensorJpaEntity;
 import br.com.agroaqua.api.telemetry.infrastructure.persistence.sensor.SensorSpringDataRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -38,22 +40,22 @@ public class MeasurementRepositoryImpl implements MeasurementRepository {
     }
 
     @Override
-    public List<Measurement> findAll() {
-        return measurementSpringDataRepository.findAll()
-                .stream().map(measurementMapper::toDomain).toList();
+    public Slice<Measurement> findAll(Pageable pageable) {
+        return measurementSpringDataRepository.findAll(pageable)
+                .map(measurementMapper::toDomain);
     }
 
     @Override
-    public List<Measurement> findAllBySensorId(Long sensorId) {
-        return measurementSpringDataRepository.findBySensorId(sensorId)
-                .stream().map(measurementMapper::toDomain).toList();
+    public Slice<Measurement> findAllBySensorId(Long sensorId, Pageable pageable) {
+        return measurementSpringDataRepository.findBySensorId(sensorId, pageable)
+                .map(measurementMapper::toDomain);
     }
 
     @Override
-    public List<Measurement> findBySensorCode(String code) {
+    public Slice<Measurement> findBySensorCode(String code, Pageable pageable) {
         SensorJpaEntity sensorByCode = sensorSpringDataRepository.findByCode(code)
                 .orElseThrow(() -> new EntityNotFoundException("Sensor not found with code: " + code));
-        return measurementSpringDataRepository.findBySensorId(sensorByCode.getId())
-                .stream().map(measurementMapper::toDomain).toList();
+        return measurementSpringDataRepository.findBySensorId(sensorByCode.getId(), pageable)
+                .map(measurementMapper::toDomain);
     }
 }

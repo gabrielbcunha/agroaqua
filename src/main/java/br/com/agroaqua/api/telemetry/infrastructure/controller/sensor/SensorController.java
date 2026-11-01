@@ -9,6 +9,8 @@ import br.com.agroaqua.api.telemetry.application.usecase.sensor.FindSensorUseCas
 import br.com.agroaqua.api.telemetry.application.usecase.sensor.PatchSensorUseCase;
 import br.com.agroaqua.api.telemetry.application.usecase.sensor.RegisterNewSensorUseCase;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,8 +40,8 @@ public class SensorController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<SensorGetResponse>> findAllSensors() {
-        List<SensorGetResponse> response = findSensorUseCase.findAll();
+    public ResponseEntity<Slice<SensorGetResponse>> findAllSensors(Pageable pageable) {
+        Slice<SensorGetResponse> response = findSensorUseCase.findAll(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 

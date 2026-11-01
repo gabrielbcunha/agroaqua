@@ -3,6 +3,8 @@ package br.com.agroaqua.api.telemetry.infrastructure.persistence.sensor;
 import br.com.agroaqua.api.telemetry.domain.sensor.Sensor;
 import br.com.agroaqua.api.telemetry.domain.sensor.SensorRepository;
 import br.com.agroaqua.api.telemetry.infrastructure.mapper.sensor.SensorMapper;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -33,9 +35,9 @@ public class SensorRepositoryImpl implements SensorRepository {
     }
 
     @Override
-    public List<Sensor> findAll() {
-        return sensorSpringDataRepository.findAll()
-                .stream().map(sensorMapper::toDomain).toList();
+    public Slice<Sensor> findAll(Pageable pageable) {
+        return sensorSpringDataRepository.findAll(pageable)
+                .map(sensorMapper::toDomain);
     }
 
     @Override

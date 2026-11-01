@@ -4,6 +4,9 @@ import br.com.agroaqua.api.telemetry.application.dto.measurement.get.Measurement
 import br.com.agroaqua.api.telemetry.domain.measurement.Measurement;
 import br.com.agroaqua.api.telemetry.domain.measurement.MeasurementRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,25 +26,19 @@ public class FindMeasurementUseCase {
         return MeasurementGetResponse.fromDomain(measurement);
     }
 
-    public List<MeasurementGetResponse> findAll(){
-        return measurementRepository.findAll()
-                .stream()
-                .map(MeasurementGetResponse::fromDomain)
-                .toList();
+    public Slice<MeasurementGetResponse> findAll(Pageable pageable){
+        return measurementRepository.findAll(pageable)
+                .map(MeasurementGetResponse::fromDomain);
     }
 
-    public List<MeasurementGetResponse> findAllBySensorId(Long sensorId){
-        return measurementRepository.findAllBySensorId(sensorId)
-                .stream()
-                .map(MeasurementGetResponse::fromDomain)
-                .toList();
+    public Slice<MeasurementGetResponse> findAllBySensorId(Long sensorId, Pageable pageable){
+        return measurementRepository.findAllBySensorId(sensorId, pageable)
+                .map(MeasurementGetResponse::fromDomain);
     }
 
-    public List<MeasurementGetResponse> findBySensorCode(String sensorCode){
-        return measurementRepository.findBySensorCode(sensorCode)
-                .stream()
-                .map(MeasurementGetResponse::fromDomain)
-                .toList();
+    public Slice<MeasurementGetResponse> findBySensorCode(String sensorCode, Pageable pageable){
+        return measurementRepository.findBySensorCode(sensorCode, pageable)
+                .map(MeasurementGetResponse::fromDomain);
     }
 
 }

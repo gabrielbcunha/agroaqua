@@ -1,5 +1,8 @@
 package br.com.agroaqua.api.telemetry.domain.sensor;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -9,7 +12,7 @@ public interface SensorRepository {
 
     Optional<Sensor> findById(Long id);
 
-    List<Sensor> findAll();
+    Slice<Sensor> findAll(Pageable pageable);
 
     Optional<Sensor> findByCode(String sensorCode);
 }

@@ -6,6 +6,8 @@ import br.com.agroaqua.api.telemetry.application.dto.measurement.get.Measurement
 import br.com.agroaqua.api.telemetry.application.usecase.measurement.FindMeasurementUseCase;
 import br.com.agroaqua.api.telemetry.application.usecase.measurement.RegisterNewMeasurementUseCase;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,8 +35,8 @@ public class MeasurementController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<MeasurementGetResponse>> findAllMeasurements() {
-        List<MeasurementGetResponse> response = findMeasurementUseCase.findAll();
+    public ResponseEntity<Slice<MeasurementGetResponse>> findAllMeasurements(Pageable pageable) {
+        Slice<MeasurementGetResponse> response = findMeasurementUseCase.findAll(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
@@ -45,14 +47,14 @@ public class MeasurementController {
     }
 
     @GetMapping("/sensor/{sensorId}")
-    public ResponseEntity<List<MeasurementGetResponse>> findBySensorId(@PathVariable Long sensorId) {
-        List<MeasurementGetResponse> response = findMeasurementUseCase.findAllBySensorId(sensorId);
+    public ResponseEntity<Slice<MeasurementGetResponse>> findBySensorId(@PathVariable Long sensorId, Pageable pageable) {
+        Slice<MeasurementGetResponse> response = findMeasurementUseCase.findAllBySensorId(sensorId, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("/sensor/code/{sensorCode}")
-    public ResponseEntity<List<MeasurementGetResponse>> findBySensorCode(@PathVariable String sensorCode) {
-        List<MeasurementGetResponse> response = findMeasurementUseCase.findBySensorCode(sensorCode);
+    public ResponseEntity<Slice<MeasurementGetResponse>> findBySensorCode(@PathVariable String sensorCode, Pageable pageable  ) {
+        Slice<MeasurementGetResponse> response = findMeasurementUseCase.findBySensorCode(sensorCode, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 

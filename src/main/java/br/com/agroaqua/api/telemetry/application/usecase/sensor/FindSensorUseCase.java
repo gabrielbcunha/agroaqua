@@ -4,6 +4,8 @@ import br.com.agroaqua.api.telemetry.application.dto.sensor.get.SensorGetRespons
 import br.com.agroaqua.api.telemetry.domain.sensor.Sensor;
 import br.com.agroaqua.api.telemetry.domain.sensor.SensorRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,11 +26,9 @@ public class FindSensorUseCase {
         return SensorGetResponse.fromDomain(sensor);
     }
 
-    public List<SensorGetResponse> findAll(){
-        return sensorRepository.findAll()
-                .stream()
-                .map(SensorGetResponse::fromDomain)
-                .toList();
+    public Slice<SensorGetResponse> findAll(Pageable pageable){
+        return sensorRepository.findAll(pageable)
+                .map(SensorGetResponse::fromDomain);
     }
 
     public SensorGetResponse findByCode(String sensorCode){
