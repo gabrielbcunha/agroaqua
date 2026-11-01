@@ -8,6 +8,8 @@ import br.com.agroaqua.api.management.application.usecase.handling.FindHandlingU
 import br.com.agroaqua.api.management.application.usecase.handling.PatchHandlingUseCase;
 import br.com.agroaqua.api.management.application.usecase.handling.RegisterNewHandlingUseCase;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,8 +38,8 @@ public class HandlingController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<HandlingGetResponse>> findAllHandlings() {
-        List<HandlingGetResponse> response = findHandlingUseCase.findAll();
+    public ResponseEntity<Slice<HandlingGetResponse>> findAllHandlings(Pageable pageable) {
+        Slice<HandlingGetResponse> response = findHandlingUseCase.findAll(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
@@ -48,14 +50,14 @@ public class HandlingController {
     }
 
     @GetMapping("/employee/{employeeId}")
-    public ResponseEntity<List<HandlingGetResponse>> findHandlingByEmployeeId(@PathVariable Long employeeId) {
-        List<HandlingGetResponse> response = findHandlingUseCase.findByEmployeeId(employeeId);
+    public ResponseEntity<Slice<HandlingGetResponse>> findHandlingByEmployeeId(@PathVariable Long employeeId, Pageable pageable) {
+        Slice<HandlingGetResponse> response = findHandlingUseCase.findByEmployeeId(employeeId, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("/plot/{plotId}")
-    public ResponseEntity<List<HandlingGetResponse>> findHandlingByPlotId(@PathVariable Long plotId) {
-        List<HandlingGetResponse> response = findHandlingUseCase.findByPlotId(plotId);
+    public ResponseEntity<Slice<HandlingGetResponse>> findHandlingByPlotId(@PathVariable Long plotId, Pageable pageable) {
+        Slice<HandlingGetResponse> response = findHandlingUseCase.findByPlotId(plotId, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 

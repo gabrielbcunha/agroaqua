@@ -1,5 +1,8 @@
 package br.com.agroaqua.api.management.domain.handling;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -9,10 +12,10 @@ public interface HandlingRepository {
 
     Optional<Handling> findById(Long id);
 
-    List<Handling> findAll();
+    Slice<Handling> findAll(Pageable pageable);
 
-    List<Handling> findByEmployeeId(Long employeeId);
+    Slice<Handling> findByEmployeeId(Long employeeId, Pageable pageable);
 
-    List<Handling> findByPlotId(Long plotId);
+    Slice<Handling> findByPlotId(Long plotId, Pageable pageable);
 
 }

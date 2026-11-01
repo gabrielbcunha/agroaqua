@@ -4,6 +4,8 @@ import br.com.agroaqua.api.management.application.dto.handling.get.HandlingGetRe
 import br.com.agroaqua.api.management.domain.handling.Handling;
 import br.com.agroaqua.api.management.domain.handling.HandlingRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,11 +19,9 @@ public class FindHandlingUseCase {
         this.handlingRepository = handlingRepository;
     }
 
-    public List<HandlingGetResponse> findAll(){
-        return handlingRepository.findAll()
-                .stream()
-                .map(HandlingGetResponse::fromDomain)
-                .toList();
+    public Slice<HandlingGetResponse> findAll(Pageable pageable) {
+        return handlingRepository.findAll(pageable)
+                .map(HandlingGetResponse::fromDomain);
     }
 
     public HandlingGetResponse findById(Long id){
@@ -30,18 +30,14 @@ public class FindHandlingUseCase {
         return HandlingGetResponse.fromDomain(handling);
     }
 
-    public List<HandlingGetResponse> findByEmployeeId(Long employeeId){
-        return handlingRepository.findByEmployeeId(employeeId)
-                .stream()
-                .map(HandlingGetResponse::fromDomain)
-                .toList();
+    public Slice<HandlingGetResponse> findByEmployeeId(Long employeeId, Pageable pageable) {
+        return handlingRepository.findByEmployeeId(employeeId, pageable)
+                .map(HandlingGetResponse::fromDomain);
     }
 
-    public List<HandlingGetResponse> findByPlotId(Long plotId){
-        return handlingRepository.findByPlotId(plotId)
-                .stream()
-                .map(HandlingGetResponse::fromDomain)
-                .toList();
+    public Slice<HandlingGetResponse> findByPlotId(Long plotId, Pageable pageable){
+        return handlingRepository.findByPlotId(plotId, pageable)
+                .map(HandlingGetResponse::fromDomain);
     }
 
 }

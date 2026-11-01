@@ -3,6 +3,8 @@ package br.com.agroaqua.api.management.infrastructure.persistence.handling;
 import br.com.agroaqua.api.management.domain.handling.Handling;
 import br.com.agroaqua.api.management.domain.handling.HandlingRepository;
 import br.com.agroaqua.api.management.infrastructure.mapper.handling.HandlingMapper;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -27,11 +29,9 @@ public class HandlingRepositoryImpl implements HandlingRepository {
     }
 
     @Override
-    public List<Handling> findAll() {
-        return handlingSpringDataRepository.findAll()
-                .stream()
-                .map(handlingMapper::toDomain)
-                .toList();
+    public Slice<Handling> findAll(Pageable pageable) {
+        return handlingSpringDataRepository.findAll(pageable)
+                .map(handlingMapper::toDomain);
     }
 
     @Override
@@ -41,18 +41,14 @@ public class HandlingRepositoryImpl implements HandlingRepository {
     }
 
     @Override
-    public List<Handling> findByEmployeeId(Long employeeId) {
-        return handlingSpringDataRepository.findByEmployeeId(employeeId)
-                .stream()
-                .map(handlingMapper::toDomain)
-                .toList();
+    public Slice<Handling> findByEmployeeId(Long employeeId, Pageable pageable) {
+        return handlingSpringDataRepository.findByEmployeeId(employeeId, pageable)
+                .map(handlingMapper::toDomain);
     }
 
     @Override
-    public List<Handling> findByPlotId(Long plotId) {
-        return handlingSpringDataRepository.findByPlotId(plotId)
-                .stream()
-                .map(handlingMapper::toDomain)
-                .toList();
+    public Slice<Handling> findByPlotId(Long plotId, Pageable pageable) {
+        return handlingSpringDataRepository.findByPlotId(plotId, pageable)
+                .map(handlingMapper::toDomain);
     }
 }

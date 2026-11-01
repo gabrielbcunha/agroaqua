@@ -8,6 +8,8 @@ import br.com.agroaqua.api.management.application.usecase.crop.FindCropUseCase;
 import br.com.agroaqua.api.management.application.usecase.crop.PatchCropUseCase;
 import br.com.agroaqua.api.management.application.usecase.crop.RegisterNewCropUseCase;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,8 +37,8 @@ public class CropController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<CropGetResponse>> findAllCrops() {
-        List<CropGetResponse> response = findCropUseCase.findAll();
+    public ResponseEntity<Slice<CropGetResponse>> findAllCrops(Pageable pageable) {
+        Slice<CropGetResponse> response = findCropUseCase.findAll(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 

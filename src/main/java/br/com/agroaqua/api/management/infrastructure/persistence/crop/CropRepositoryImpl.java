@@ -3,6 +3,8 @@ package br.com.agroaqua.api.management.infrastructure.persistence.crop;
 import br.com.agroaqua.api.management.domain.crop.Crop;
 import br.com.agroaqua.api.management.domain.crop.CropRepository;
 import br.com.agroaqua.api.management.infrastructure.mapper.crop.CropMapper;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -27,11 +29,9 @@ public class CropRepositoryImpl implements CropRepository {
     }
 
     @Override
-    public List<Crop> findAll() {
-        return cropSpringDataRepository.findAll()
-                .stream()
-                .map(cropMapper::toDomain)
-                .toList();
+    public Slice<Crop> findAll(Pageable pageable) {
+        return cropSpringDataRepository.findAll(pageable)
+                .map(cropMapper::toDomain);
     }
 
     @Override

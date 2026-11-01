@@ -4,6 +4,8 @@ import br.com.agroaqua.api.management.application.dto.crop.get.CropGetResponse;
 import br.com.agroaqua.api.management.domain.crop.Crop;
 import br.com.agroaqua.api.management.domain.crop.CropRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,11 +19,9 @@ public class FindCropUseCase {
         this.cropRepository = cropRepository;
     }
 
-    public List<CropGetResponse> findAll(){
-        return cropRepository.findAll()
-                .stream()
-                .map(CropGetResponse::fromDomain)
-                .toList();
+    public Slice<CropGetResponse> findAll(Pageable pageable) {
+        return cropRepository.findAll(pageable)
+                .map(CropGetResponse::fromDomain);
     }
 
     public CropGetResponse findById(Long id){

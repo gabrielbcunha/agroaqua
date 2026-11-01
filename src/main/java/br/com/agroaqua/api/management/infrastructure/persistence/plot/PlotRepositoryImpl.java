@@ -3,6 +3,8 @@ package br.com.agroaqua.api.management.infrastructure.persistence.plot;
 import br.com.agroaqua.api.management.domain.plot.Plot;
 import br.com.agroaqua.api.management.domain.plot.PlotRepository;
 import br.com.agroaqua.api.management.infrastructure.mapper.plot.PlotMapper;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -28,9 +30,9 @@ public class PlotRepositoryImpl implements PlotRepository {
     }
 
     @Override
-    public List<Plot> findAll() {
-        return plotSpringDataRepository.findAll()
-                .stream().map(plotMapper::toDomain).toList();
+    public Slice<Plot> findAll(Pageable pageable) {
+        return plotSpringDataRepository.findAll(pageable)
+                .map(plotMapper::toDomain);
     }
 
     @Override
@@ -46,10 +48,8 @@ public class PlotRepositoryImpl implements PlotRepository {
     }
 
     @Override
-    public List<Plot> findByCropId(Long cropId) {
-        return plotSpringDataRepository.findByCropId(cropId)
-                .stream()
-                .map(plotMapper::toDomain)
-                .toList();
+    public Slice<Plot> findByCropId(Long cropId, Pageable pageable) {
+        return plotSpringDataRepository.findByCropId(cropId, pageable)
+                .map(plotMapper::toDomain);
     }
 }

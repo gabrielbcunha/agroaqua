@@ -1,5 +1,8 @@
 package br.com.agroaqua.api.management.domain.plot;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -9,9 +12,9 @@ public interface PlotRepository {
 
     Optional<Plot> findById(Long id);
 
-    List<Plot> findAll();
+    Slice<Plot> findAll(Pageable pageable);
 
     Optional<Plot> findByCode(String code);
 
-    List<Plot> findByCropId(Long cropId);
+    Slice<Plot> findByCropId(Long cropId, Pageable pageable);
 }

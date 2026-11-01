@@ -8,6 +8,8 @@ import br.com.agroaqua.api.management.application.usecase.plot.FindPlotUseCase;
 import br.com.agroaqua.api.management.application.usecase.plot.PatchPlotUseCase;
 import br.com.agroaqua.api.management.application.usecase.plot.RegisterNewPlotUseCase;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,8 +37,8 @@ public class PlotController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<PlotGetResponse>> findAllPlots() {
-        List<PlotGetResponse> response = findPlotUseCase.findAll();
+    public ResponseEntity<Slice<PlotGetResponse>> findAllPlots(Pageable pageable) {
+        Slice<PlotGetResponse> response = findPlotUseCase.findAll(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
@@ -53,8 +55,8 @@ public class PlotController {
     }
 
    @GetMapping("crop/{cropId}")
-   public ResponseEntity<List<PlotGetResponse>> findPlotByCropId(@PathVariable Long cropId) {
-        List<PlotGetResponse> response = findPlotUseCase.findByCropId(cropId);
+   public ResponseEntity<Slice<PlotGetResponse>> findPlotByCropId(@PathVariable Long cropId, Pageable pageable) {
+        Slice<PlotGetResponse> response = findPlotUseCase.findByCropId(cropId, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(response);
    }
 
