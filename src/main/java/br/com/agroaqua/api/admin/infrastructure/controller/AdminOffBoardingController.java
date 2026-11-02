@@ -20,7 +20,7 @@ public class AdminOffBoardingController {
         this.processingAnonymizationUseCase = processingAnonymizationUseCase;
     }
 
-    @DeleteMapping("/{userId}")
+    @PostMapping("/{userId}/anonymize")
     ResponseEntity<Void> anonymizeUserEmployee(@PathVariable Long userId, @Valid @RequestBody AdminAnonymizeRequest request) throws AccessDeniedException {
         AnonymizeUserEmployeeEvent eventRequest = new AnonymizeUserEmployeeEvent(
                 request.emailConfirmation(),

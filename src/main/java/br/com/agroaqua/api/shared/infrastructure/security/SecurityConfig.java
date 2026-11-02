@@ -41,7 +41,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PATCH, "/auth/{id}").hasAnyAuthority("EMPLOYEE_MANAGER", "EMPLOYEE_WORKER", "ADMIN")
                         //=========================== Admin =================================
                         .requestMatchers(HttpMethod.POST, "/api/admin/onboarding/employees").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/admin/offboarding/{userId}").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/admin/offboarding/{userId}/anonymize").hasAuthority("ADMIN")
                         //========================== Employee ===============================
                         .requestMatchers(HttpMethod.GET, "/api/employee").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/employee/{id}").hasAuthority("ADMIN")
