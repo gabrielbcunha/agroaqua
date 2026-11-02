@@ -4,6 +4,8 @@ import br.com.agroaqua.api.management.application.dto.plot.get.PlotGetResponse;
 import br.com.agroaqua.api.management.application.dto.plot.patch.PlotPatchRequest;
 import br.com.agroaqua.api.management.domain.plot.Plot;
 import br.com.agroaqua.api.management.domain.plot.PlotRepository;
+import br.com.agroaqua.api.shared.domain.exception.DomainValidationException;
+import br.com.agroaqua.api.shared.domain.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,11 +22,11 @@ public class PatchPlotUseCase {
     public PlotGetResponse execute(Long id, PlotPatchRequest request) {
 
         if (id == null) {
-            throw new IllegalArgumentException("Id is required");
+            throw new DomainValidationException("Id is required");
         }
 
         Plot plot = plotRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Plot not found with id " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Plot not found with id " + id));
 
         if (request.code() != null && !request.code().trim().isEmpty()) {
             plot.changeCode(request.code());

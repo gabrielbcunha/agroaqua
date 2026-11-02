@@ -1,5 +1,7 @@
 package br.com.agroaqua.api.management.domain.handling;
 
+import br.com.agroaqua.api.shared.domain.exception.DomainValidationException;
+
 import java.time.LocalDateTime;
 
 public class Handling {
@@ -24,7 +26,7 @@ public class Handling {
     public Handling(Long id, Long employeeId, Long plotId, HandlingCategory category, String description, LocalDateTime startDateTime, LocalDateTime endDateTime) {
         this(employeeId, plotId, category, description, startDateTime, endDateTime);
         if(id == null) {
-            throw new IllegalArgumentException("ID cannot be null");
+            throw new DomainValidationException("ID cannot be null");
         }
         this.id = id;
     }
@@ -59,28 +61,28 @@ public class Handling {
 
     public void changeEmployeeId(Long employeeId) {
         if(employeeId == null) {
-            throw new IllegalArgumentException("employeeId cannot be null");
+            throw new DomainValidationException("employeeId cannot be null");
         }
         this.employeeId = employeeId;
     }
 
     public void changePlotId(Long newPlotId) {
         if (newPlotId == null) {
-            throw new IllegalArgumentException("New Plot ID cannot be null");
+            throw new DomainValidationException("New Plot ID cannot be null");
         }
         this.plotId = newPlotId;
     }
 
     public void changeCategory(HandlingCategory newCategory) {
         if (newCategory == null) {
-            throw new IllegalArgumentException("New Category cannot be null");
+            throw new DomainValidationException("New Category cannot be null");
         }
         this.category = newCategory;
     }
 
     public void changeDescription(String newDescription) {
         if (newDescription == null || newDescription.isBlank()) {
-            throw new IllegalArgumentException("New Description cannot be null or blank");
+            throw new DomainValidationException("New Description cannot be null or blank");
         }
         this.description = newDescription;
     }
@@ -93,27 +95,27 @@ public class Handling {
             newEndDateTime = this.endDateTime;
         }
         if (newStartDateTime.isAfter(newEndDateTime)) {
-            throw new IllegalArgumentException("Start date cannot be after end date");
+            throw new DomainValidationException("Start date cannot be after end date");
         }
         this.startDateTime = newStartDateTime;
         this.endDateTime = newEndDateTime;
     }
 
-    public void validateInput(Long employeeId, Long plotId, HandlingCategory category, String description, LocalDateTime startDateTime, LocalDateTime endDateTime){
+    private void validateInput(Long employeeId, Long plotId, HandlingCategory category, String description, LocalDateTime startDateTime, LocalDateTime endDateTime){
         if(employeeId == null) {
-            throw new IllegalArgumentException("Employee ID cannot be null");
+            throw new DomainValidationException("Employee ID cannot be null");
         } else if(plotId == null) {
-            throw new IllegalArgumentException("Plot ID cannot be null");
+            throw new DomainValidationException("Plot ID cannot be null");
         } else if(category == null) {
-            throw new IllegalArgumentException("Category cannot be null");
+            throw new DomainValidationException("Category cannot be null");
         } else if(description == null || description.isBlank()) {
-            throw new IllegalArgumentException("Description cannot be null or blank");
+            throw new DomainValidationException("Description cannot be null or blank");
         } else if(startDateTime == null) {
-            throw new IllegalArgumentException("Start date cannot be null");
+            throw new DomainValidationException("Start date cannot be null");
         } else if(endDateTime == null) {
-            throw new IllegalArgumentException("End date cannot be null");
+            throw new DomainValidationException("End date cannot be null");
         } else if (endDateTime.isBefore(startDateTime)) {
-            throw new IllegalArgumentException("End date cannot be before start date");
+            throw new DomainValidationException("End date cannot be before start date");
         }
     }
 

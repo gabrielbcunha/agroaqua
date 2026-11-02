@@ -14,8 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.file.AccessDeniedException;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/handling")
@@ -32,7 +30,7 @@ public class HandlingController {
     }
 
     @PostMapping()
-    public ResponseEntity<HandlingCreateResponse> registerHandling(@Valid @RequestBody HandlingCreateRequest request) throws AccessDeniedException {
+    public ResponseEntity<HandlingCreateResponse> registerHandling(@Valid @RequestBody HandlingCreateRequest request) {
         HandlingCreateResponse response = registerNewHandlingUseCase.execute(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -62,7 +60,7 @@ public class HandlingController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<HandlingGetResponse> updateHandling(@PathVariable Long id, @Valid @RequestBody HandlingPatchRequest request) throws AccessDeniedException {
+    public ResponseEntity<HandlingGetResponse> updateHandling(@PathVariable Long id, @Valid @RequestBody HandlingPatchRequest request) {
         HandlingGetResponse response = patchHandlingUseCase.execute(id, request);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

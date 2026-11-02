@@ -3,12 +3,10 @@ package br.com.agroaqua.api.management.application.usecase.plot;
 import br.com.agroaqua.api.management.application.dto.plot.get.PlotGetResponse;
 import br.com.agroaqua.api.management.domain.plot.Plot;
 import br.com.agroaqua.api.management.domain.plot.PlotRepository;
-import jakarta.persistence.EntityNotFoundException;
+import br.com.agroaqua.api.shared.domain.exception.ResourceNotFoundException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class FindPlotUseCase {
@@ -26,13 +24,13 @@ public class FindPlotUseCase {
 
     public PlotGetResponse findById(Long id){
         Plot plot = plotRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Plot not found with id " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Plot not found with id " + id));
         return PlotGetResponse.fromDomain(plot);
     }
 
     public PlotGetResponse findByCode(String code){
         Plot plot = plotRepository.findByCode(code)
-                .orElseThrow(() -> new EntityNotFoundException("Plot not found with code " + code));
+                .orElseThrow(() -> new ResourceNotFoundException("Plot not found with code " + code));
         return PlotGetResponse.fromDomain(plot);
     }
 
@@ -40,5 +38,4 @@ public class FindPlotUseCase {
         return plotRepository.findByCropId(cropId, pageable)
                 .map(PlotGetResponse::fromDomain);
     }
-
 }

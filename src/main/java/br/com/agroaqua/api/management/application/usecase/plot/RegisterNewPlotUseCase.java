@@ -20,7 +20,14 @@ public class RegisterNewPlotUseCase {
     public PlotCreateResponse execute(PlotCreateRequest request) {
         Plot newPlot = new Plot(request.code(), request.cropId(), request.length(), request.width(), request.usedArea());
         Plot savedPlot = plotRepository.save(newPlot);
-        return new PlotCreateResponse(savedPlot.getId(), savedPlot.getCode(), savedPlot.getCropId(), savedPlot.getLength(), savedPlot.getWidth(), savedPlot.getTotalArea(), savedPlot.getUsedArea(), savedPlot.getAvailableArea());
+        return new PlotCreateResponse(
+                savedPlot.getId(),
+                savedPlot.getCode(),
+                savedPlot.getCropId(),
+                savedPlot.getLength(),
+                savedPlot.getWidth(),
+                savedPlot.getTotalArea(),
+                savedPlot.getUsedArea(),
+                savedPlot.getAvailableArea());
     }
-
 }

@@ -1,5 +1,7 @@
 package br.com.agroaqua.api.management.domain.plot;
 
+import br.com.agroaqua.api.shared.domain.exception.DomainValidationException;
+
 import java.math.BigDecimal;
 
 public class Plot {
@@ -27,7 +29,7 @@ public class Plot {
     public Plot(Long id, String code, Long cropId, BigDecimal length, BigDecimal width, BigDecimal usedArea) {
         this(code, cropId, length, width, usedArea);
         if(id == null) {
-            throw new IllegalArgumentException("Id cannot be null");
+            throw new DomainValidationException("Id cannot be null");
         }
         this.id = id;
     }
@@ -66,14 +68,14 @@ public class Plot {
 
     public void changeCode(String newCode) {
         if (newCode == null || newCode.isBlank()) {
-            throw new IllegalArgumentException("New code cannot be null or blank");
+            throw new DomainValidationException("New code cannot be null or blank");
         }
         this.code = newCode;
     }
 
     public void changeCropId(Long newCropId) {
         if (newCropId == null) {
-            throw new IllegalArgumentException("New crop id cannot be null");
+            throw new DomainValidationException("New crop id cannot be null");
         }
         this.cropId = newCropId;
     }
@@ -89,13 +91,13 @@ public class Plot {
             newUsedArea = this.usedArea;
         }
         if (newWidth.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("New width cannot be negative or zero");
+            throw new DomainValidationException("New width cannot be negative or zero");
         }
         if (newLength.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("New length cannot be negative or zero");
+            throw new DomainValidationException("New length cannot be negative or zero");
         }
         if (newUsedArea.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("New used area cannot be negative");
+            throw new DomainValidationException("New used area cannot be negative");
         }
 
         this.length = newLength;
@@ -105,7 +107,7 @@ public class Plot {
         this.totalArea = newTotalArea;
 
         if(newUsedArea.compareTo(newTotalArea) > 0) {
-            throw new IllegalArgumentException("New used area cannot be greater than the total area");
+            throw new DomainValidationException("New used area cannot be greater than the total area");
         }
         this.usedArea = newUsedArea;
 
@@ -114,32 +116,31 @@ public class Plot {
 
     private void validadeInput(BigDecimal length, BigDecimal width, BigDecimal usedArea, String code){
         if(length == null) {
-            throw new IllegalArgumentException("Length cannot be null");
+            throw new DomainValidationException("Length cannot be null");
         } else if (length.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("Length cannot be negative or zero");
+            throw new DomainValidationException("Length cannot be negative or zero");
         }
 
         if(width == null) {
-            throw new IllegalArgumentException("Width cannot be null");
+            throw new DomainValidationException("Width cannot be null");
         } else if (width.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("Width cannot be negative or zero");
+            throw new DomainValidationException("Width cannot be negative or zero");
         }
 
         if(usedArea == null) {
-            throw new IllegalArgumentException("UsedArea cannot be null");
+            throw new DomainValidationException("UsedArea cannot be null");
         } else if (usedArea.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("UsedArea cannot be negative");
+            throw new DomainValidationException("UsedArea cannot be negative");
         }
 
         if(code == null || code.isBlank()) {
-            throw new IllegalArgumentException("Code cannot be null or blank");
+            throw new DomainValidationException("Code cannot be null or blank");
         }
     }
 
     private void validateUsedArea(BigDecimal totalArea, BigDecimal usedArea) {
         if (totalArea.compareTo(usedArea) < 0) {
-            throw new IllegalArgumentException("Used Area cannot be greater than the total area");
+            throw new DomainValidationException("Used Area cannot be greater than the total area");
         }
     }
-
 }

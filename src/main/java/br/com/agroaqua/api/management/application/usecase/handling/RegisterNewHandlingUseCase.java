@@ -6,11 +6,11 @@ import br.com.agroaqua.api.management.domain.handling.Handling;
 import br.com.agroaqua.api.management.domain.handling.HandlingRepository;
 import br.com.agroaqua.api.operational.domain.employee.Employee;
 import br.com.agroaqua.api.operational.domain.employee.EmployeeRepository;
+import br.com.agroaqua.api.shared.domain.exception.DomainAuthorizationException;
+import br.com.agroaqua.api.shared.domain.exception.ResourceNotFoundException;
 import br.com.agroaqua.api.shared.infrastructure.security.SecurityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.nio.file.AccessDeniedException;
 
 @Service
 public class RegisterNewHandlingUseCase {
@@ -26,7 +26,7 @@ public class RegisterNewHandlingUseCase {
     }
 
     @Transactional
-    public HandlingCreateResponse execute(HandlingCreateRequest request) throws AccessDeniedException {
+    public HandlingCreateResponse execute(HandlingCreateRequest request) {
         Handling newHandling = new Handling(
                 request.employeeId(),
                 request.plotId(),
@@ -39,10 +39,10 @@ public class RegisterNewHandlingUseCase {
         Long loggedUserId = securityUtils.getLoggedUserId();
 
         Employee loggedEmployee = employeeRepository.findByUserId(loggedUserId)
-                .orElseThrow(() -> new IllegalArgumentException("Employee not found with id " + loggedUserId));
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id " + loggedUserId));
 
         if (!loggedEmployee.getId().equals(request.employeeId())) {
-            throw new AccessDeniedException("You are not allowed to perform this action");
+            throw new DomainAuthorizationException("You are not allowed to perform this action");
         }
 
         Handling savedHandling = handlingRepository.save(newHandling);
@@ -56,6 +56,4 @@ public class RegisterNewHandlingUseCase {
                 savedHandling.getEndDateTime()
         );
     }
-
-
 }

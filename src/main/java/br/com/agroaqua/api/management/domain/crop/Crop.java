@@ -1,5 +1,7 @@
 package br.com.agroaqua.api.management.domain.crop;
 
+import br.com.agroaqua.api.shared.domain.exception.DomainValidationException;
+
 import java.math.BigDecimal;
 
 public class Crop {
@@ -20,7 +22,7 @@ public class Crop {
     public Crop(Long id, String name, String description, BigDecimal normalHumidity, int standardTimeToGrow) {
         this(name, description, normalHumidity, standardTimeToGrow);
         if(id == null) {
-            throw new IllegalArgumentException("Id cannot be null");
+            throw new DomainValidationException("Id cannot be null");
         }
         this.id = id;
     }
@@ -47,46 +49,46 @@ public class Crop {
 
     public void changeName(String newName) {
         if (newName == null || newName.isBlank()) {
-            throw new IllegalArgumentException("new Name cannot be null or blank");
+            throw new DomainValidationException("new Name cannot be null or blank");
         }
         this.name = newName;
     }
 
     public void changeDescription(String newDescription) {
         if (newDescription == null || newDescription.isBlank()) {
-            throw new IllegalArgumentException("new Description cannot be null or blank");
+            throw new DomainValidationException("new Description cannot be null or blank");
         }
         this.description = newDescription;
     }
 
     public void changeNormalHumidity(BigDecimal newNormalHumidity) {
         if (newNormalHumidity == null) {
-            throw new IllegalArgumentException("new NormalHumidity cannot be null");
+            throw new DomainValidationException("new NormalHumidity cannot be null");
         } else if (newNormalHumidity.compareTo(BigDecimal.ZERO) <= 0 || newNormalHumidity.compareTo(new BigDecimal("100")) > 0) {
-            throw new IllegalArgumentException("NormalHumidity cannot be less than or equal to 0, nor greater than 100.");
+            throw new DomainValidationException("NormalHumidity cannot be less than or equal to 0, nor greater than 100.");
         }
         this.normalHumidity = newNormalHumidity;
     }
 
     public void changeStandardTimeToGrowInDays(int newStandardTimeToGrowInDays) {
         if (newStandardTimeToGrowInDays < 0 ||  newStandardTimeToGrowInDays == 0) {
-            throw new IllegalArgumentException("New Standard Time To Grow In Days cannot be negative or Zero");
+            throw new DomainValidationException("New Standard Time To Grow In Days cannot be negative or Zero");
         }
         this.standardTimeToGrowInDays = newStandardTimeToGrowInDays;
     }
 
-    public void validateInput(String name, String description, BigDecimal normalHumidity, int standardTimeToGrow){
+    private void validateInput(String name, String description, BigDecimal normalHumidity, int standardTimeToGrow){
         if(name == null || name.isBlank()) {
-            throw new IllegalArgumentException("Name cannot be null or blank");
+            throw new DomainValidationException("Name cannot be null or blank");
         } else if(description == null || description.isBlank()) {
-            throw new IllegalArgumentException("Description cannot be null or blank");
+            throw new DomainValidationException("Description cannot be null or blank");
         } else if (normalHumidity == null) {
-            throw new IllegalArgumentException("NormalHumidity cannot be null");
+            throw new DomainValidationException("NormalHumidity cannot be null");
         } else if(normalHumidity.compareTo(BigDecimal.ZERO) <= 0 || normalHumidity.compareTo(new BigDecimal("100")) > 0) {
-         throw new IllegalArgumentException("NormalHumidity cannot be less than or equal to 0, nor greater than 100.");
+         throw new DomainValidationException("NormalHumidity cannot be less than or equal to 0, nor greater than 100.");
         }
         else if(standardTimeToGrow <= 0) {
-            throw new IllegalArgumentException("StandardTimeToGrowInDays cannot be negative or zero");
+            throw new DomainValidationException("StandardTimeToGrowInDays cannot be negative or zero");
         }
     }
 }

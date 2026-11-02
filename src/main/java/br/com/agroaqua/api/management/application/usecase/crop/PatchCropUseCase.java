@@ -4,6 +4,8 @@ import br.com.agroaqua.api.management.application.dto.crop.get.CropGetResponse;
 import br.com.agroaqua.api.management.application.dto.crop.patch.CropPatchRequest;
 import br.com.agroaqua.api.management.domain.crop.Crop;
 import br.com.agroaqua.api.management.domain.crop.CropRepository;
+import br.com.agroaqua.api.shared.domain.exception.DomainValidationException;
+import br.com.agroaqua.api.shared.domain.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,11 +24,11 @@ public class PatchCropUseCase {
     public CropGetResponse execute(Long id, CropPatchRequest request) {
 
         if (id == null) {
-            throw new IllegalArgumentException("ID is required");
+            throw new DomainValidationException("ID is required");
         }
 
         Crop crop = cropRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Crop not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Crop not found with id: " + id));
 
         if (request.name() != null && !request.name().isEmpty()) {
             crop.changeName(request.name());
@@ -50,5 +52,4 @@ public class PatchCropUseCase {
         Crop patchedCrop = cropRepository.save(crop);
         return CropGetResponse.fromDomain(patchedCrop);
     }
-
 }
