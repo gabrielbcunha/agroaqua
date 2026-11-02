@@ -1,6 +1,7 @@
 package br.com.agroaqua.api.identity.domain.user;
 
 import br.com.agroaqua.api.shared.domain.Role;
+import br.com.agroaqua.api.shared.domain.exception.DomainValidationException;
 
 public class User {
     private Long id;
@@ -18,21 +19,21 @@ public class User {
     public User(Long id, String email, String password, Role role) {
         this(email, password, role);
         if (id == null) {
-            throw new IllegalArgumentException("Id cannot be null");
+            throw new DomainValidationException("Id cannot be null");
         }
         this.id = id;
     }
 
     private void validateInput(String email, String password, Role role) {
         if (email == null || email.isBlank()) {
-            throw new IllegalArgumentException("Email cannot be null or blank");
+            throw new DomainValidationException("Email cannot be null or blank");
         } else if (password == null || password.isBlank()) {
-            throw new IllegalArgumentException("Password cannot be null blank");
+            throw new DomainValidationException("Password cannot be null blank");
         } else if (password.length() < 8) {
-            throw new IllegalArgumentException("Password must be at least 8 characters long");
+            throw new DomainValidationException("Password must be at least 8 characters long");
         }
         else if (role == null) {
-            throw new IllegalArgumentException("Role cannot be null");
+            throw new DomainValidationException("Role cannot be null");
         }
     }
 
@@ -54,38 +55,38 @@ public class User {
 
     public void changeEmail(String newEmail) {
         if (newEmail == null || newEmail.isBlank()) {
-            throw new IllegalArgumentException("New Email cannot be null or blank");
+            throw new DomainValidationException("New Email cannot be null or blank");
         }
         this.email = newEmail;
     }
 
     public void changePassword(String newPassword) {
         if (newPassword == null || newPassword.isBlank()) {
-            throw new IllegalArgumentException("New Password cannot be null or blank");
+            throw new DomainValidationException("New Password cannot be null or blank");
         }
         if (newPassword.length() < 8) {
-            throw new IllegalArgumentException("New Password must be at least 8 characters long");
+            throw new DomainValidationException("New Password must be at least 8 characters long");
         }
         this.password = newPassword;
     }
 
     public void changeRole(Role newRole) {
         if (newRole == null) {
-            throw new IllegalArgumentException("New Role cannot be null");
+            throw new DomainValidationException("New Role cannot be null");
         }
         this.role = newRole;
     }
 
     public void anonymizeEmail(String anonymizedEmail) {
         if (anonymizedEmail == null || anonymizedEmail.isBlank()) {
-            throw new IllegalArgumentException("Anonymized email cannot be null or blank");
+            throw new DomainValidationException("Anonymized email cannot be null or blank");
         }
         this.email = anonymizedEmail;
     }
 
     public void anonymizePassword(String anonymizedPassword) {
         if (anonymizedPassword == null || anonymizedPassword.isBlank()) {
-            throw new IllegalArgumentException("Anonymized password cannot be null or blank");
+            throw new DomainValidationException("Anonymized password cannot be null or blank");
         }
         this.password = anonymizedPassword;
     }

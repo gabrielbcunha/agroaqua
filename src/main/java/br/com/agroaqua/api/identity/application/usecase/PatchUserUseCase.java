@@ -4,10 +4,10 @@ import br.com.agroaqua.api.identity.application.dto.get.UserGetResponse;
 import br.com.agroaqua.api.identity.application.dto.patch.UserPatchRequest;
 import br.com.agroaqua.api.identity.domain.user.User;
 import br.com.agroaqua.api.identity.domain.user.UserRepository;
-import br.com.agroaqua.api.shared.infrastructure.security.JwtTokenService;
+import br.com.agroaqua.api.shared.domain.exception.DomainAuthorizationException;
+import br.com.agroaqua.api.shared.domain.exception.DomainValidationException;
+import br.com.agroaqua.api.shared.domain.exception.ResourceNotFoundException;
 import br.com.agroaqua.api.shared.infrastructure.security.SecurityUtils;
-import jakarta.persistence.EntityNotFoundException;
-import org.apache.coyote.BadRequestException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.nio.file.AccessDeniedException;
 
 @Service
 public class PatchUserUseCase {
@@ -34,23 +33,23 @@ public class PatchUserUseCase {
     }
 
     @Transactional
-    public UserGetResponse execute(Long id, UserPatchRequest request) throws BadRequestException, AccessDeniedException {
+    public UserGetResponse execute(Long id, UserPatchRequest request) {
 
         if (id == null) {
-            throw new BadRequestException("id is required");
+            throw new DomainValidationException("id is required");
         }
 
         if (request.currentPassword() == null || request.currentPassword().isEmpty()) {
-            throw new BadRequestException("Password is required");
+            throw new DomainValidationException("Password is required");
         }
 
         Long loggedUserId = securityUtils.getLoggedUserId();
 
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
 
         if (!user.getId().equals(loggedUserId)) {
-            throw new AccessDeniedException("Access denied, you are not authorized to perform this action");
+            throw new DomainAuthorizationException("Access denied, you are not authorized to perform this action");
         }
 
         try {
@@ -69,7 +68,7 @@ public class PatchUserUseCase {
             User patchedUser = userRepository.save(user);
             return UserGetResponse.fromDomain(patchedUser);
         } catch (BadCredentialsException e) {
-            throw new BadCredentialsException("Password is incorrect");
+            throw new DomainValidationException("Password is incorrect");
         }
     }
 }

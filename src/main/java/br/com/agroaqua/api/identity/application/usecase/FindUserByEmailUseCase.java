@@ -3,6 +3,7 @@ package br.com.agroaqua.api.identity.application.usecase;
 import br.com.agroaqua.api.identity.application.dto.findbyemail.UserFindByEmailRequest;
 import br.com.agroaqua.api.identity.domain.user.User;
 import br.com.agroaqua.api.identity.domain.user.UserRepository;
+import br.com.agroaqua.api.shared.domain.exception.DomainValidationException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -19,7 +20,7 @@ public class FindUserByEmailUseCase {
 
     public Optional<User> execute(UserFindByEmailRequest request) {
         return Optional.of(userRepository.findByEmail(request.email())
-                .orElseThrow(() -> new IllegalArgumentException("No User found with email: " + request.email())));
+                .orElseThrow(() -> new DomainValidationException("No User found with email: " + request.email())));
     }
 
 }
