@@ -2,7 +2,6 @@ package br.com.agroaqua.api.admin.infrastructure.controller;
 
 import br.com.agroaqua.api.admin.application.dto.off.AdminAnonymizeRequest;
 import br.com.agroaqua.api.admin.application.usecase.ProcessingAnonymizationUseCase;
-import br.com.agroaqua.api.shared.domain.event.AnonymizeUserEmployeeEvent;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,14 +20,10 @@ public class AdminOffBoardingController {
     }
 
     @PostMapping("/{userId}/anonymize")
-    ResponseEntity<Void> anonymizeUserEmployee(@PathVariable Long userId, @Valid @RequestBody AdminAnonymizeRequest request) throws AccessDeniedException {
-        AnonymizeUserEmployeeEvent eventRequest = new AnonymizeUserEmployeeEvent(
-                request.emailConfirmation(),
-                request.passwordConfirmation(),
-                userId
-        );
-
-        processingAnonymizationUseCase.execute(eventRequest);
+    ResponseEntity<Void> anonymizeUserEmployee(
+            @PathVariable Long userId,
+            @Valid @RequestBody AdminAnonymizeRequest requestConfirmation) throws AccessDeniedException {
+        processingAnonymizationUseCase.execute(userId, requestConfirmation);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
