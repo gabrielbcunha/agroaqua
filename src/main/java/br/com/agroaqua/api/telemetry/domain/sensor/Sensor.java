@@ -1,5 +1,7 @@
 package br.com.agroaqua.api.telemetry.domain.sensor;
 
+import br.com.agroaqua.api.shared.domain.exception.DomainValidationException;
+
 public class Sensor {
     private Long id;
     private String code;
@@ -18,7 +20,7 @@ public class Sensor {
     public Sensor(Long id, String code, Long plotId, boolean active, String apiKeyHash) {
         this(code, plotId, active, apiKeyHash);
         if(id == null){
-            throw new IllegalArgumentException("id cannot be null");
+            throw new DomainValidationException("id cannot be null");
         }
         this.id = id;
     }
@@ -45,32 +47,32 @@ public class Sensor {
 
     public void changeCode(String newCode) {
         if (newCode == null) {
-            throw new IllegalArgumentException("newCode cannot be null");
+            throw new DomainValidationException("newCode cannot be null");
         }
         this.code = newCode;
     }
 
     public void changePlotId(Long plotId) {
         if (plotId == null) {
-            throw new IllegalArgumentException("plotId cannot be null");
+            throw new DomainValidationException("plotId cannot be null");
         }
         this.plotId = plotId;
     }
 
     public void deactivate() {
         if (!this.active){
-            throw new IllegalStateException("Sensor is already deactivated");
+            throw new DomainValidationException("Sensor is already deactivated");
         }
         this.active = false;
     }
 
-    public void validateInput(String code, Long plotId, String apiKeyHash) {
+    private void validateInput(String code, Long plotId, String apiKeyHash) {
         if(code == null){
-            throw new IllegalArgumentException("code cannot be null");
+            throw new DomainValidationException("code cannot be null");
         } else if(plotId == null){
-            throw new IllegalArgumentException("plotId cannot be null");
+            throw new DomainValidationException("plotId cannot be null");
         } if(apiKeyHash == null){
-            throw new IllegalArgumentException("apiKeyHash cannot be null");
+            throw new DomainValidationException("apiKeyHash cannot be null");
         }
     }
 

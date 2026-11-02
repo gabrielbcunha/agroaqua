@@ -1,5 +1,7 @@
 package br.com.agroaqua.api.telemetry.application.usecase.sensor;
 
+import br.com.agroaqua.api.shared.domain.exception.DomainValidationException;
+import br.com.agroaqua.api.shared.domain.exception.ResourceNotFoundException;
 import br.com.agroaqua.api.telemetry.application.dto.sensor.get.SensorGetResponse;
 import br.com.agroaqua.api.telemetry.application.dto.sensor.patch.SensorPatchRequest;
 import br.com.agroaqua.api.telemetry.domain.sensor.Sensor;
@@ -20,11 +22,11 @@ public class PatchSensorUseCase {
     public SensorGetResponse execute(Long id, SensorPatchRequest request) {
 
         if (id == null) {
-            throw new IllegalArgumentException("id is required");
+            throw new DomainValidationException("id is required");
         }
 
         Sensor sensor = sensorRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("sensor not found with id " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("sensor not found with id " + id));
 
         if (request.code() != null && !request.code().trim().isEmpty()) {
             sensor.changeCode(request.code());

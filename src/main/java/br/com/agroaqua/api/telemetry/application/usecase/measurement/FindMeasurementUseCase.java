@@ -1,15 +1,12 @@
 package br.com.agroaqua.api.telemetry.application.usecase.measurement;
 
+import br.com.agroaqua.api.shared.domain.exception.ResourceNotFoundException;
 import br.com.agroaqua.api.telemetry.application.dto.measurement.get.MeasurementGetResponse;
 import br.com.agroaqua.api.telemetry.domain.measurement.Measurement;
 import br.com.agroaqua.api.telemetry.domain.measurement.MeasurementRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class FindMeasurementUseCase {
@@ -22,7 +19,7 @@ public class FindMeasurementUseCase {
 
     public MeasurementGetResponse findById(Long id){
         Measurement measurement = measurementRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Measurement not found with id " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Measurement not found with id " + id));
         return MeasurementGetResponse.fromDomain(measurement);
     }
 

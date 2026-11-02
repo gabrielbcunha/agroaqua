@@ -1,5 +1,7 @@
 package br.com.agroaqua.api.telemetry.application.usecase.measurement;
 
+import br.com.agroaqua.api.shared.domain.exception.DomainAuthorizationException;
+import br.com.agroaqua.api.shared.domain.exception.DomainValidationException;
 import br.com.agroaqua.api.telemetry.application.dto.measurement.create.MeasurementCreateRequest;
 import br.com.agroaqua.api.telemetry.application.dto.measurement.create.MeasurementCreateResponse;
 import br.com.agroaqua.api.telemetry.domain.measurement.Measurement;
@@ -36,7 +38,7 @@ public class RegisterNewMeasurementUseCase {
         }
 
         if (!isAuthenticated) {
-            throw new org.springframework.security.access.AccessDeniedException("Access denied: Invalid credentials or inactive sensor");
+            throw new DomainAuthorizationException("Access denied: Invalid credentials or inactive sensor");
         }
 
         LocalDateTime receivedTime = request.measuredAt();
@@ -45,7 +47,7 @@ public class RegisterNewMeasurementUseCase {
         } else if (request.measuredAt().isAfter(LocalDateTime.now())) {
             receivedTime = LocalDateTime.now();
         } else if (request.measuredAt().isBefore(LocalDateTime.now().minusDays(1))) {
-            throw new IllegalArgumentException("The measurement time has expired");
+            throw new DomainValidationException("The measurement time has expired");
         }
 
         Measurement measurement = new Measurement(

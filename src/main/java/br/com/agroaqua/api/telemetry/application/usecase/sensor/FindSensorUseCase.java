@@ -1,15 +1,13 @@
 package br.com.agroaqua.api.telemetry.application.usecase.sensor;
 
+import br.com.agroaqua.api.shared.domain.exception.ResourceNotFoundException;
 import br.com.agroaqua.api.telemetry.application.dto.sensor.get.SensorGetResponse;
 import br.com.agroaqua.api.telemetry.domain.sensor.Sensor;
 import br.com.agroaqua.api.telemetry.domain.sensor.SensorRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class FindSensorUseCase {
@@ -22,7 +20,7 @@ public class FindSensorUseCase {
 
     public SensorGetResponse findById(Long id){
         Sensor sensor =  sensorRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Sensor not found with ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Sensor not found with ID: " + id));
         return SensorGetResponse.fromDomain(sensor);
     }
 
@@ -33,7 +31,7 @@ public class FindSensorUseCase {
 
     public SensorGetResponse findByCode(String sensorCode){
         Sensor sensor = sensorRepository.findByCode(sensorCode)
-                .orElseThrow(() -> new EntityNotFoundException("Sensor not found with code: " + sensorCode));
+                .orElseThrow(() -> new ResourceNotFoundException("Sensor not found with code: " + sensorCode));
         return SensorGetResponse.fromDomain(sensor);
     }
 }

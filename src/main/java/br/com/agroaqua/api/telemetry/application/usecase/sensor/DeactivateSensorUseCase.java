@@ -1,5 +1,7 @@
 package br.com.agroaqua.api.telemetry.application.usecase.sensor;
 
+import br.com.agroaqua.api.shared.domain.exception.DomainValidationException;
+import br.com.agroaqua.api.shared.domain.exception.ResourceNotFoundException;
 import br.com.agroaqua.api.telemetry.application.dto.sensor.get.SensorGetResponse;
 import br.com.agroaqua.api.telemetry.domain.sensor.Sensor;
 import br.com.agroaqua.api.telemetry.domain.sensor.SensorRepository;
@@ -18,11 +20,11 @@ public class DeactivateSensorUseCase {
     @Transactional
     public SensorGetResponse execute(Long id){
         if (id == null){
-            throw new IllegalArgumentException("Id cannot be null");
+            throw new DomainValidationException("Id cannot be null");
         }
 
         Sensor sensor = sensorRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Sensor not found with id " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Sensor not found with id " + id));
 
         sensor.deactivate();
         Sensor deactivateSensor = sensorRepository.save(sensor);
