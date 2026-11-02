@@ -9,11 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.file.AccessDeniedException;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/employee")
@@ -43,7 +40,7 @@ public class EmployeeController {
     public ResponseEntity<EmployeeGetResponse> updateEmployee(
             @PathVariable Long id,
             @Valid @RequestBody EmployeePatchRequest request
-    ) throws AccessDeniedException {
+    ) {
         EmployeeGetResponse response = patchEmployeeUseCase.execute(id, request);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
