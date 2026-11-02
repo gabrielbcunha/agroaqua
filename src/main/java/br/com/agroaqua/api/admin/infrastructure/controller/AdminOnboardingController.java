@@ -1,4 +1,4 @@
-package br.com.agroaqua.api.admin.application.controller;
+package br.com.agroaqua.api.admin.infrastructure.controller;
 
 import br.com.agroaqua.api.admin.application.usecase.AdminOnboardingUseCase;
 import br.com.agroaqua.api.admin.application.dto.on.AdminOnboardingRequest;
